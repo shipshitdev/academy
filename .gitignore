@@ -35,3 +35,5 @@ coverage/
 # Misc
 .vercel
 .turbo
+
+next-env.d.ts

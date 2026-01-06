@@ -5,14 +5,14 @@ import {
   Injectable,
   UnauthorizedException,
 } from "@nestjs/common";
-import { Clerk } from "@clerk/clerk-sdk-node";
+import { createClerkClient } from "@clerk/clerk-sdk-node";
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  private clerk: Clerk;
+  private clerk: ReturnType<typeof createClerkClient>;
 
   constructor() {
-    this.clerk = new Clerk({
+    this.clerk = createClerkClient({
       secretKey: process.env.CLERK_SECRET_KEY || "",
     });
   }
@@ -35,7 +35,7 @@ export class AdminGuard implements CanActivate {
     }
 
     const user = await this.clerk.users.getUser(userId);
-    const primaryEmail = user.emailAddresses.find((email) => email.id === user.primaryEmailAddressId)
+    const primaryEmail = user.emailAddresses.find((email: { id: string; emailAddress: string }) => email.id === user.primaryEmailAddressId)
       ?.emailAddress;
     const fallbackEmail = user.emailAddresses[0]?.emailAddress;
     const email = (primaryEmail || fallbackEmail || "").toLowerCase();

@@ -4,14 +4,14 @@ import {
   Injectable,
   UnauthorizedException,
 } from "@nestjs/common";
-import { Clerk } from "@clerk/clerk-sdk-node";
+import { createClerkClient } from "@clerk/clerk-sdk-node";
 
 @Injectable()
 export class OptionalClerkAuthGuard implements CanActivate {
-  private clerk: Clerk;
+  private clerk: ReturnType<typeof createClerkClient>;
 
   constructor() {
-    this.clerk = new Clerk({
+    this.clerk = createClerkClient({
       secretKey: process.env.CLERK_SECRET_KEY || "",
     });
   }
