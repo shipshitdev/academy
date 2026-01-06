@@ -50,14 +50,13 @@ bun install
 ## Development
 
 ```bash
-# Backend
-bun run dev:api
+# Run API + Web together
+bun run dev
 
-# Web
-bun run dev:web
-
-# Mobile
-bun run dev:mobile
+# Or run individually:
+bun run dev:api    # Backend only
+bun run dev:web    # Web only
+bun run dev:mobile # Mobile only
 ```
 
 ## Environment Setup
