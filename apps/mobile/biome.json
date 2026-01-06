@@ -8,11 +8,7 @@
     }
   },
   "files": {
-    "ignore": [
-      "node_modules",
-      ".expo",
-      "dist"
-    ]
+    "ignoreUnknown": false
   },
   "formatter": {
     "enabled": true,

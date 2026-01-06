@@ -10,10 +10,14 @@ import {
 
 @Injectable()
 export class BillingService {
-	private stripe: Stripe;
-	private clerk: ReturnType<typeof createClerkClient>;
+  private stripe: Stripe;
+  private clerk: ReturnType<typeof createClerkClient>;
 
-	constructor(
+
+
+
+
+  constructor(
     @InjectModel(Subscription.name)
     private subscriptionModel: Model<SubscriptionDocument>,
   ) {
@@ -21,6 +25,10 @@ export class BillingService {
     if (!secretKey) {
       throw new Error("STRIPE_SECRET_KEY is not set");
     }
+
+
+
+
 
 
 

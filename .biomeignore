@@ -1,0 +1,72 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+.next/
+**/.next/
+out/
+**/out/
+web-build/
+**/web-build/
+
+# Expo
+.expo/
+**/.expo/
+
+# Lock files
+*.lock
+*.lockb
+bun.lock
+bun.lockb
+
+# Test coverage
+coverage/
+**/coverage/
+
+# Cache
+.cache/
+**/.cache/
+.turbo/
+**/.turbo/
+
+# AI agent documentation (internal)
+.agent/
+**/.agent/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel/
+**/.vercel/
+
+# TypeScript build info
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# Next.js
+next-env.d.ts
+**/next-env.d.ts
+
+# Files with parser issues (valid TypeScript but Biome parser limitation)
+apps/api/src/billing/billing.service.ts

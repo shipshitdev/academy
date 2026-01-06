@@ -13,13 +13,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignoreUnknown": false,
-    "ignore": [
-      "node_modules",
-      "dist",
-      ".next",
-      "build"
-    ]
+    "ignoreUnknown": false
   },
   "formatter": {
     "enabled": true,

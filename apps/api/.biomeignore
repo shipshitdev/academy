@@ -1,0 +1,3 @@
+# Files with parser issues (valid TypeScript but Biome parser limitation)
+src/billing/billing.service.ts
+
