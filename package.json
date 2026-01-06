@@ -1,22 +1,22 @@
 {
-  "name": "open-learning-center",
-  "private": true,
-  "scripts": {
-    "dev": "bun run dev:api & bun run dev:web",
-    "dev:api": "cd apps/api && bun run start:dev",
-    "dev:mobile": "cd apps/mobile && bun run start",
-    "dev:web": "cd apps/web && bun run dev",
-    "update:all": "bun scripts/update-all-packages.js",
-    "pre:install": "bun update --latest --recursive && bun install",
-    "seed:content": "cd apps/api && bun run seed:content",
-    "prepare": "husky"
-  },
-  "devDependencies": {
-    "husky": "^9.1.7"
-  },
-  "version": "0.0.1",
-  "workspaces": [
-    "apps/*",
-    "packages/*"
-  ]
+	"name": "open-learning-center",
+	"private": true,
+	"scripts": {
+		"dev": "bun run dev:api & bun run dev:web",
+		"dev:api": "cd apps/api && bun run start:dev",
+		"dev:mobile": "cd apps/mobile && bun run start",
+		"dev:web": "cd apps/web && bun run dev",
+		"update:all": "bun scripts/update-all-packages.js",
+		"pre:install": "bun update --latest --recursive && bun install",
+		"seed:content": "cd apps/api && bun run seed:content",
+		"prepare": "husky"
+	},
+	"devDependencies": {
+		"husky": "^9.1.7"
+	},
+	"version": "0.0.1",
+	"workspaces": [
+		"apps/*",
+		"packages/*"
+	]
 }

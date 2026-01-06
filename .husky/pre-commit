@@ -9,4 +9,3 @@ for file in $staged_files; do
     git add "$file"
   fi
 done
-
