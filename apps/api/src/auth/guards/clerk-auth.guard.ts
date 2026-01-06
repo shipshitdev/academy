@@ -4,17 +4,12 @@ import {
   ExecutionContext,
   UnauthorizedException,
 } from "@nestjs/common";
-import { createClerkClient } from "@clerk/clerk-sdk-node";
+import { verifyToken } from "@clerk/backend";
+import { ConfigService } from "../../config/config.service";
 
 @Injectable()
 export class ClerkAuthGuard implements CanActivate {
-  private clerk: ReturnType<typeof createClerkClient>;
-
-  constructor() {
-    this.clerk = createClerkClient({
-      secretKey: process.env.CLERK_SECRET_KEY || "",
-    });
-  }
+  constructor(private readonly configService: ConfigService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -25,9 +20,12 @@ export class ClerkAuthGuard implements CanActivate {
     }
 
     const token = authHeader.replace("Bearer ", "");
+    const clerkSecretKey = this.configService.get<string>("CLERK_SECRET_KEY");
 
     try {
-      const session = await this.clerk.verifyToken(token);
+      const session = await verifyToken(token, {
+        secretKey: clerkSecretKey || "",
+      });
       request.user = {
         userId: session.sub,
         sessionId: session.sid,

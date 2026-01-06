@@ -5,17 +5,12 @@ import {
   Injectable,
   UnauthorizedException,
 } from "@nestjs/common";
-import { createClerkClient } from "@clerk/clerk-sdk-node";
+import { createClerkClient } from "@clerk/backend";
+import { ConfigService } from "../../config/config.service";
 
 @Injectable()
 export class AdminGuard implements CanActivate {
-  private clerk: ReturnType<typeof createClerkClient>;
-
-  constructor() {
-    this.clerk = createClerkClient({
-      secretKey: process.env.CLERK_SECRET_KEY || "",
-    });
-  }
+  constructor(private readonly configService: ConfigService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const request = context.switchToHttp().getRequest();
@@ -25,7 +20,7 @@ export class AdminGuard implements CanActivate {
       throw new UnauthorizedException("No authenticated user");
     }
 
-    const allowlist = (process.env.ADMIN_EMAIL_ALLOWLIST || "")
+    const allowlist = (this.configService.get<string>("ADMIN_EMAIL_ALLOWLIST") || "")
       .split(",")
       .map((email) => email.trim().toLowerCase())
       .filter(Boolean);
@@ -34,7 +29,9 @@ export class AdminGuard implements CanActivate {
       throw new ForbiddenException("Admin allowlist is empty");
     }
 
-    const user = await this.clerk.users.getUser(userId);
+    const clerkSecretKey = this.configService.get<string>("CLERK_SECRET_KEY");
+    const clerk = createClerkClient({ secretKey: clerkSecretKey });
+    const user = await clerk.users.getUser(userId);
     const primaryEmail = user.emailAddresses.find((email: { id: string; emailAddress: string }) => email.id === user.primaryEmailAddressId)
       ?.emailAddress;
     const fallbackEmail = user.emailAddresses[0]?.emailAddress;

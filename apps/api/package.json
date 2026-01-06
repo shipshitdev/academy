@@ -1,29 +1,32 @@
 {
   "dependencies": {
-    "@clerk/clerk-sdk-node": "latest",
+    "@clerk/backend": "^2.29.0",
     "@nestjs/common": "11.1.11",
-    "@nestjs/config": "4.0.0",
+    "@nestjs/config": "4.0.2",
     "@nestjs/core": "11.1.11",
-    "@nestjs/mongoose": "11.0.0",
-    "@nestjs/platform-express": "11.0.0",
-    "@nestjs/swagger": "11.0.0",
+    "@nestjs/mongoose": "11.0.4",
+    "@nestjs/platform-express": "11.1.11",
+    "@nestjs/swagger": "11.2.4",
     "class-transformer": "0.5.1",
     "class-validator": "0.14.3",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "joi": "^18.0.2",
     "mongoose": "9.1.2",
     "reflect-metadata": "0.2.2",
     "rxjs": "7.8.2",
-    "stripe": "17.0.0"
+    "stripe": "20.1.1"
   },
   "devDependencies": {
-    "@biomejs/biome": "2.3.10",
+    "@biomejs/biome": "2.3.11",
     "@nestjs/cli": "11.0.14",
     "@nestjs/schematics": "11.0.9",
     "@nestjs/testing": "11.1.11",
     "@types/express": "5.0.6",
-    "@types/node": "25.0.3",
-    "@vitest/coverage-v8": "3.0.7",
+    "@types/node": "^25.0.3",
+    "@vitest/coverage-v8": "4.0.16",
     "typescript": "5.9.3",
-    "vitest": "3.0.7"
+    "vitest": "4.0.16"
   },
   "name": "@openlearningcenter/api",
   "private": true,

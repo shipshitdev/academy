@@ -38,5 +38,4 @@ export class Community {
 
 export const CommunitySchema = SchemaFactory.createForClass(Community);
 
-CommunitySchema.index({ slug: 1 }, { unique: true });
 CommunitySchema.index({ isPublished: 1, sortOrder: 1 });

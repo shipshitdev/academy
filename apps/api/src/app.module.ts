@@ -1,5 +1,4 @@
 import { Module } from "@nestjs/common";
-import { ConfigModule } from "@nestjs/config";
 import { MongooseModule } from "@nestjs/mongoose";
 import { CommunitiesModule } from "./collections/communities/communities.module";
 import { CoursesModule } from "./collections/courses/courses.module";
@@ -9,13 +8,19 @@ import { SubscriptionsModule } from "./collections/subscriptions/subscriptions.m
 import { ProgressesModule } from "./collections/progresses/progresses.module";
 import { EventsModule } from "./collections/events/events.module";
 import { BillingModule } from "./billing/billing.module";
+import { ConfigModule } from "./config/config.module";
+import { ConfigService } from "./config/config.service";
 
 @Module({
   imports: [
-    ConfigModule.forRoot({
-      isGlobal: true,
+    ConfigModule,
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        uri: configService.mongoURL,
+      }),
+      inject: [ConfigService],
     }),
-    MongooseModule.forRoot(process.env.MONGODB_URI || "mongodb://localhost/api"),
     CommunitiesModule,
     CoursesModule,
     LessonsModule,

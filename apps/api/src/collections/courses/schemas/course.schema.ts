@@ -32,5 +32,4 @@ export class Course {
 
 export const CourseSchema = SchemaFactory.createForClass(Course);
 
-CourseSchema.index({ slug: 1 }, { unique: true });
 CourseSchema.index({ communityId: 1, isPublished: 1, sortOrder: 1 });

@@ -16,6 +16,11 @@
     "indentWidth": 2,
     "lineWidth": 100
   },
+  "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    }
+  },
   "linter": {
     "enabled": true,
     "rules": {
@@ -40,19 +45,11 @@
           }
         }
       }
-    },
-    {
-      "includes": [
-        "src/billing/billing.service.ts"
-      ],
-      "linter": {
-        "enabled": false
-      }
     }
   ],
   "vcs": {
     "clientKind": "git",
     "enabled": true,
-    "useIgnoreFile": true
+    "useIgnoreFile": false
   }
 }

@@ -1,0 +1,12 @@
+#!/bin/sh
+# Collapse consecutive empty lines in staged files
+
+staged_files=$(git diff --cached --name-only --diff-filter=ACM | grep -E '\.(ts|tsx|js|jsx)$' || true)
+
+for file in $staged_files; do
+  if [ -f "$file" ]; then
+    sed -i '' '/^$/N;/^\n$/d' "$file"
+    git add "$file"
+  fi
+done
+

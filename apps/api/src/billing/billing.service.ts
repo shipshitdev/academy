@@ -1,4 +1,4 @@
-import { createClerkClient } from "@clerk/clerk-sdk-node";
+import { createClerkClient } from "@clerk/backend";
 import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import type { Model } from "mongoose";
@@ -7,37 +7,22 @@ import {
   Subscription,
   type SubscriptionDocument,
 } from "../collections/subscriptions/schemas/subscription.schema";
+import type { ConfigService } from "../config/config.service";
 
 @Injectable()
 export class BillingService {
-  private stripe: Stripe;
-  private clerk: ReturnType<typeof createClerkClient>;
-
-
-
-
-
-  constructor(
-    @InjectModel(Subscription.name)
-    private subscriptionModel: Model<SubscriptionDocument>,
-  ) {
-    const secretKey = process.env.STRIPE_SECRET_KEY;
+private stripe: Stripe;
+constructor(
+    @InjectModel(Subscription.name) private subscriptionModel: Model<SubscriptionDocument>,
+  private readonly configService: ConfigService,
+) {
+    const secretKey = this.configService.get("STRIPE_SECRET_KEY");
     if (!secretKey) {
       throw new Error("STRIPE_SECRET_KEY is not set");
     }
 
-
-
-
-
-
-
     this.stripe = new Stripe(secretKey, {
-      apiVersion: "2025-02-24.acacia",
-    });
-
-    this.clerk = createClerkClient({
-      secretKey: process.env.CLERK_SECRET_KEY || "",
+      apiVersion: "2025-12-15.clover",
     });
   }
 
@@ -48,14 +33,14 @@ export class BillingService {
 	async createCheckoutSession(
 		userId: string,
 	): Promise<Stripe.Checkout.Session> {
-		const priceId = process.env.STRIPE_PRICE_ID;
+		const priceId = this.configService.getOptional("STRIPE_PRICE_ID");
 		if (!priceId) {
 			throw new BadRequestException("STRIPE_PRICE_ID is not set");
 		}
 
 		const appUrl =
-			process.env.APP_URL ||
-			process.env.NEXT_PUBLIC_APP_URL ||
+			this.configService.getOptional("APP_URL") ||
+			this.configService.getOptional("NEXT_PUBLIC_APP_URL") ||
 			"http://localhost:3000";
 
 		const customerId = await this.getOrCreateCustomer(userId);
@@ -95,13 +80,15 @@ export class BillingService {
 
 	private async getUserEmail(userId: string): Promise<string | undefined> {
 		try {
-			const user = await this.clerk.users.getUser(userId);
+			const clerkSecretKey = this.configService.get("CLERK_SECRET_KEY");
+			const clerk = createClerkClient({ secretKey: clerkSecretKey });
+			const user = await clerk.users.getUser(userId);
 			const primaryEmail = user.emailAddresses.find(
 				(email: { id: string; emailAddress: string }) =>
 					email.id === user.primaryEmailAddressId,
 			)?.emailAddress;
 			return primaryEmail || user.emailAddresses[0]?.emailAddress;
-		} catch (error) {
+		} catch {
 			return undefined;
 		}
 	}
