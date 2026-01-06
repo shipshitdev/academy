@@ -14,7 +14,7 @@ export class BillingService {
   private stripe: Stripe;
 
   constructor(
-          @InjectModel(Subscription.name)
+    @InjectModel(Subscription.name)
     private subscriptionModel: Model<SubscriptionDocument>,
     private readonly configService: ConfigService,
   ) {
