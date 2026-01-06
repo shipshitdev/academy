@@ -11,11 +11,13 @@ import type { ConfigService } from "../config/config.service";
 
 @Injectable()
 export class BillingService {
-private stripe: Stripe;
-constructor(
-    @InjectModel(Subscription.name) private subscriptionModel: Model<SubscriptionDocument>,
-  private readonly configService: ConfigService,
-) {
+  private stripe: Stripe;
+
+  constructor(
+    @InjectModel(Subscription.name)
+    private subscriptionModel: Model<SubscriptionDocument>,
+    private readonly configService: ConfigService,
+  ) {
     const secretKey = this.configService.get("STRIPE_SECRET_KEY");
     if (!secretKey) {
       throw new Error("STRIPE_SECRET_KEY is not set");
@@ -29,10 +31,7 @@ constructor(
   getStripe() {
     return this.stripe;
   }
-
-  async createCheckoutSession(
-    userId: string,
-  ): Promise<Stripe.Checkout.Session> {
+  async createCheckoutSession(userId: string): Promise<Stripe.Checkout.Session> {
     const priceId = this.configService.getOptional("STRIPE_PRICE_ID");
     if (!priceId) {
       throw new BadRequestException("STRIPE_PRICE_ID is not set");
@@ -61,9 +60,7 @@ constructor(
   }
 
   private async getOrCreateCustomer(userId: string): Promise<string> {
-    const existing = await this.subscriptionModel
-      .findOne({ userId })
-      .sort({ createdAt: -1 });
+    const existing = await this.subscriptionModel.findOne({ userId }).sort({ createdAt: -1 });
 
     if (existing?.stripeCustomerId) {
       return existing.stripeCustomerId;
@@ -84,8 +81,7 @@ constructor(
       const clerk = createClerkClient({ secretKey: clerkSecretKey });
       const user = await clerk.users.getUser(userId);
       const primaryEmail = user.emailAddresses.find(
-        (email: { id: string; emailAddress: string }) =>
-          email.id === user.primaryEmailAddressId,
+        (email: { id: string; emailAddress: string }) => email.id === user.primaryEmailAddressId,
       )?.emailAddress;
       return primaryEmail || user.emailAddresses[0]?.emailAddress;
     } catch {
