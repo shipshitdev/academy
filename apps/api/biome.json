@@ -9,7 +9,8 @@
   },
   "extends": ["../../biome.json"],
   "files": {
-    "ignoreUnknown": false
+    "ignoreUnknown": false,
+    "includes": ["src/**", "scripts/**", "*.ts", "*.mts", "*.json"]
   },
   "formatter": {
     "enabled": true,
