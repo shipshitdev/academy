@@ -12,13 +12,25 @@ async function getAuthHeaders(): Promise<HeadersInit> {
   };
 }
 
+class ApiError extends Error {
+  status: number;
+
+  constructor(message: string, status: number) {
+    super(message);
+    this.status = status;
+    this.name = "ApiError";
+  }
+}
+
 async function handleResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
     const error = await response.json().catch(() => ({ message: "Request failed" }));
-    throw new Error(error.message || `HTTP ${response.status}`);
+    throw new ApiError(error.message || `HTTP ${response.status}`, response.status);
   }
   return response.json();
 }
+
+export { ApiError };
 
 export const LessonService = {
   async getAll(courseId: string, options?: IRequestOptions): Promise<Lesson[]> {

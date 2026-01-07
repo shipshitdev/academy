@@ -1,63 +1,52 @@
 "use client";
 
-import { Badge, Card, CardContent, CardFooter, CardHeader, Skeleton } from "@agenticindiedev/ui";
-import { useAuth } from "@clerk/nextjs";
-import type { Community } from "@interfaces/community.interface";
-import type { Membership } from "@interfaces/membership.interface";
-import { CommunityService } from "@services/community.service";
-import { MembershipService } from "@services/membership.service";
-import { SubscriptionService } from "@services/subscription.service";
-import { ArrowRight, Code, type LucideIcon, Palette, ShoppingCart } from "lucide-react";
-import Image from "next/image";
+import { Card, CardContent, Skeleton } from "@agenticindiedev/ui";
+import type { Course } from "@interfaces/course.interface";
+import { CourseService } from "@services/course.service";
+import { ArrowRight, BookOpen, Code, Palette, ShoppingCart } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-function getCommunityIcon(title: string): LucideIcon {
+function getCourseIcon(title: string) {
   const lower = title.toLowerCase();
-  if (lower.includes("commerce") || lower.includes("ecom")) {
+  if (lower.includes("sell") || lower.includes("commerce") || lower.includes("ecom")) {
     return ShoppingCart;
   }
-  if (lower.includes("code") || lower.includes("dev")) {
+  if (lower.includes("build") || lower.includes("code") || lower.includes("dev")) {
     return Code;
   }
-  return Palette;
-}
-
-function CommunityPlaceholderIcon({ title }: { title: string }) {
-  const Icon = getCommunityIcon(title);
-  return (
-    <div className="flex h-full items-center justify-center">
-      <Icon className="h-16 w-16 text-primary/30" />
-    </div>
-  );
+  if (lower.includes("distribute") || lower.includes("content") || lower.includes("social")) {
+    return Palette;
+  }
+  return BookOpen;
 }
 
 const JOURNEY_STEPS = [
   {
     icon: Code,
     step: "Step 1",
-    title: "Learn to Build",
+    title: "Build",
     subtitle: "Vibe Coding",
     description:
-      "Start here. Ship real apps using Claude, Cursor, and modern AI tools. All you need is ideas and prompts.",
+      "Learn to vibe code. Ship real apps with AI as your pair programmer. No experience needed.",
     color: "violet",
   },
   {
     icon: ShoppingCart,
     step: "Step 2",
-    title: "Learn to Sell",
-    subtitle: "Ecommerce & Products",
+    title: "Sell",
+    subtitle: "Ecommerce",
     description:
-      "Now monetize. Build automated stores, digital products, and AI-powered marketing campaigns that generate revenue.",
+      "Launch and scale ecommerce stores. Learn to sell products online with AI-powered marketing.",
     color: "amber",
   },
   {
     icon: Palette,
     step: "Step 3",
-    title: "Learn to Scale",
-    subtitle: "AI Content Distribution",
+    title: "Distribute",
+    subtitle: "AI Content",
     description:
-      "Finally, grow. Create viral content, automate social media, and build distribution engines that compound.",
+      "Generate AI content and publish on socials. Build your audience and grow your reach.",
     color: "emerald",
   },
 ];
@@ -65,24 +54,23 @@ const JOURNEY_STEPS = [
 const STEPS = [
   {
     number: "01",
-    title: "Start with Building",
-    description: "Begin with vibe coding. Ship your first app with AI. No experience needed.",
+    title: "Build",
+    description: "Learn vibe coding. Ship your first app with AI as your pair programmer.",
   },
   {
     number: "02",
-    title: "Learn to Monetize",
-    description: "Apply your skills to ecommerce. Launch products that generate real revenue.",
+    title: "Sell",
+    description: "Launch an ecommerce store. Learn to sell products online.",
   },
   {
     number: "03",
-    title: "Scale with Content",
-    description: "Build your distribution engine. Create content that compounds and grows.",
+    title: "Distribute",
+    description: "Generate AI content. Publish on socials and build your audience.",
   },
   {
     number: "04",
-    title: "Combine & Repeat",
-    description:
-      "Stack the skills. Build apps, sell products, and distribute content. Rinse and repeat.",
+    title: "Repeat",
+    description: "Stack the skills. Build, sell, distribute. Rinse and repeat.",
   },
 ];
 
@@ -143,10 +131,10 @@ function HeroSection() {
             <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Link>
           <Link
-            href="#communities"
+            href="#courses"
             className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-6 py-3 text-base font-medium text-foreground transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-muted"
           >
-            Explore Communities
+            Browse Courses
           </Link>
         </div>
 
@@ -246,13 +234,7 @@ function FeaturesSection() {
           </p>
         </div>
 
-        <div className="relative mt-16">
-          {/* Connecting line above the cards */}
-          <div
-            className="absolute left-1/2 -top-4 hidden h-0.5 w-[60%] -translate-x-1/2 bg-gradient-to-r from-violet-600/30 via-amber-500/30 to-emerald-500/30 md:block"
-            aria-hidden="true"
-          />
-
+        <div className="mt-16">
           <div className="grid gap-8 md:grid-cols-3">
             {JOURNEY_STEPS.map((step, idx) => {
               const colors = colorClasses[step.color as keyof typeof colorClasses];
@@ -340,23 +322,8 @@ function StepsSection() {
   );
 }
 
-interface CommunityCardProps {
-  community: Community;
-  isJoined: boolean;
-  isSubscribed: boolean;
-  onJoin: (id: string) => void;
-  onSubscribe: () => void;
-}
-
-function CommunityCard({
-  community,
-  isJoined,
-  isSubscribed,
-  onJoin,
-  onSubscribe,
-}: CommunityCardProps) {
-  const isFree = community.isFree;
-  const price = community.priceMonthly || 49;
+function CourseCard({ course }: { course: Course }) {
+  const Icon = getCourseIcon(course.title);
 
   return (
     <Card
@@ -364,113 +331,51 @@ function CommunityCard({
       hover
       className="group flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5"
     >
-      {/* Cover image placeholder */}
-      <div className="relative h-48 overflow-hidden bg-muted">
-        {community.coverImageUrl ? (
-          <Image
-            src={community.coverImageUrl}
-            alt={community.title}
-            fill
-            className="object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-        ) : (
-          <CommunityPlaceholderIcon title={community.title} />
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-card via-transparent to-transparent transition-opacity duration-300 group-hover:opacity-80" />
-
-        {/* Price badge */}
-        <div className="absolute right-4 top-4 transition-transform duration-300 group-hover:scale-105">
-          <Badge variant={isFree ? "success" : "secondary"}>
-            {isFree ? "Free" : `$${price}/mo`}
-          </Badge>
+      <CardContent className="flex-1 p-6">
+        <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 transition-transform duration-300 group-hover:scale-110">
+          <Icon className="h-6 w-6 text-primary" />
         </div>
-      </div>
-
-      <CardHeader>
         <h3 className="text-xl font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">
-          {community.title}
+          {course.title}
         </h3>
-      </CardHeader>
-
-      <CardContent className="flex-1">
-        {community.description && (
-          <p className="text-sm leading-relaxed text-muted-foreground">{community.description}</p>
+        {course.description && (
+          <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{course.description}</p>
         )}
-      </CardContent>
-
-      <CardFooter className="flex items-center gap-3">
         <Link
-          href={`/communities/${community.slug}`}
-          className="flex-1 rounded-md border border-border bg-background px-4 py-2 text-center text-sm font-medium text-foreground transition-all duration-200 hover:-translate-y-0.5 hover:bg-muted hover:border-primary/30"
+          href={`/courses/${course.slug}`}
+          className="mt-4 inline-flex items-center gap-1 text-sm font-medium text-primary hover:underline"
         >
-          View Community
+          Start learning
+          <ArrowRight className="h-4 w-4" />
         </Link>
-        {isFree ? (
-          <button
-            type="button"
-            className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 ${
-              isJoined
-                ? "bg-secondary text-secondary-foreground"
-                : "bg-primary text-primary-foreground shadow-md shadow-primary/20 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30"
-            }`}
-            onClick={() => onJoin(community._id)}
-            disabled={isJoined}
-          >
-            {isJoined ? "Joined" : "Join Free"}
-          </button>
-        ) : (
-          <button
-            type="button"
-            className={`flex-1 rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 ${
-              isSubscribed
-                ? "bg-secondary text-secondary-foreground"
-                : "bg-primary text-primary-foreground shadow-md shadow-primary/20 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/30"
-            }`}
-            onClick={onSubscribe}
-            disabled={isSubscribed}
-          >
-            {isSubscribed ? "Subscribed" : "Subscribe"}
-          </button>
-        )}
-      </CardFooter>
+      </CardContent>
     </Card>
   );
 }
 
-function CommunityCardSkeleton() {
+function CourseCardSkeleton() {
   return (
     <Card variant="outline" className="flex flex-col overflow-hidden">
-      <Skeleton className="h-48 rounded-none" />
-      <CardHeader>
+      <CardContent className="flex-1 p-6 space-y-4">
+        <Skeleton className="h-12 w-12 rounded-xl" />
         <Skeleton className="h-6 w-3/4" />
-      </CardHeader>
-      <CardContent className="flex-1">
         <Skeleton className="h-4 w-full" />
-        <Skeleton className="mt-2 h-4 w-2/3" />
+        <Skeleton className="h-4 w-2/3" />
       </CardContent>
-      <CardFooter className="flex gap-3">
-        <Skeleton className="h-10 flex-1" />
-        <Skeleton className="h-10 flex-1" />
-      </CardFooter>
     </Card>
   );
 }
 
-function CommunitiesSection() {
-  const { isSignedIn } = useAuth();
-  const [communities, setCommunities] = useState<Community[]>([]);
-  const [memberships, setMemberships] = useState<Membership[]>([]);
+function CoursesSection() {
+  const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [isSubscribed] = useState(false);
-
-  const joinedIds = new Set(memberships.map((m) => m.communityId));
 
   useEffect(() => {
     const controller = new AbortController();
 
-    CommunityService.getAll({ signal: controller.signal })
-      .then(setCommunities)
+    CourseService.getAll(undefined, { signal: controller.signal })
+      .then(setCourses)
       .catch((err) => {
         if (err.name !== "AbortError") {
           setError(err.message);
@@ -481,85 +386,36 @@ function CommunitiesSection() {
     return () => controller.abort();
   }, []);
 
-  useEffect(() => {
-    if (!isSignedIn) {
-      setMemberships([]);
-      return;
-    }
-
-    MembershipService.getMine()
-      .then(setMemberships)
-      .catch(() => setMemberships([]));
-  }, [isSignedIn]);
-
-  const handleJoin = async (communityId: string) => {
-    if (!isSignedIn) {
-      window.location.href = "/sign-in";
-      return;
-    }
-
-    try {
-      await MembershipService.join(communityId);
-      const updated = await MembershipService.getMine();
-      setMemberships(updated);
-    } catch (err) {
-      console.error("Failed to join:", err);
-    }
-  };
-
-  const handleSubscribe = async () => {
-    if (!isSignedIn) {
-      window.location.href = "/sign-in";
-      return;
-    }
-
-    try {
-      const { url } = await SubscriptionService.createCheckout();
-      if (url) {
-        window.location.href = url;
-      }
-    } catch (err) {
-      console.error("Failed to subscribe:", err);
-    }
-  };
-
   return (
-    <section id="communities" className="relative py-24">
+    <section id="courses" className="relative py-24">
       <div className="mx-auto max-w-6xl px-6">
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">Join a Community</h2>
+          <h2 className="text-3xl font-bold text-foreground sm:text-4xl">Start Learning</h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            Pick a track that matches your goals. Learn alongside other builders shipping real
+            Pick a course and dive in. Each one is designed to take you from zero to shipping real
             projects.
           </p>
         </div>
 
         {loading ? (
           <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <CommunityCardSkeleton />
-            <CommunityCardSkeleton />
-            <CommunityCardSkeleton />
+            <CourseCardSkeleton />
+            <CourseCardSkeleton />
+            <CourseCardSkeleton />
           </div>
         ) : error ? (
           <div className="mt-16 rounded-lg border border-destructive/30 bg-destructive/10 p-4 text-center text-destructive">
             {error}
           </div>
-        ) : communities.length === 0 ? (
+        ) : courses.length === 0 ? (
           <div className="mt-16 text-center text-muted-foreground">
-            <p>No communities available yet.</p>
-            <p className="mt-2 text-sm">Check back soon or contact us to get started.</p>
+            <p>No courses available yet.</p>
+            <p className="mt-2 text-sm">Check back soon!</p>
           </div>
         ) : (
           <div className="mt-16 grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {communities.map((community) => (
-              <CommunityCard
-                key={community._id}
-                community={community}
-                isJoined={joinedIds.has(community._id)}
-                isSubscribed={isSubscribed}
-                onJoin={handleJoin}
-                onSubscribe={handleSubscribe}
-              />
+            {courses.map((course) => (
+              <CourseCard key={course._id} course={course} />
             ))}
           </div>
         )}
@@ -605,8 +461,8 @@ function Footer() {
             © 2026 Open Learning Center. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
-            <Link href="/communities" className="hover:text-foreground transition-colors">
-              Communities
+            <Link href="/courses" className="hover:text-foreground transition-colors">
+              Courses
             </Link>
             <Link href="/sign-up" className="hover:text-foreground transition-colors">
               Get Started
@@ -624,7 +480,7 @@ export function LandingPage() {
       <HeroSection />
       <FeaturesSection />
       <StepsSection />
-      <CommunitiesSection />
+      <CoursesSection />
       <CtaSection />
       <Footer />
     </div>

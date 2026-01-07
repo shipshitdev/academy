@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, type CurrentUserPayload } from '../../auth/decorators/current-user.decorator';
 import { ClerkAuthGuard } from '../../auth/guards/clerk-auth.guard';
 import type { CreateMembershipDto } from './dto/create-membership.dto';
-import type { MembershipsService } from './memberships.service';
+import { MembershipsService } from './memberships.service';
 
 @ApiTags('memberships')
 @Controller('memberships')

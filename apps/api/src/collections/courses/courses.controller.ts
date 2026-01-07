@@ -14,7 +14,7 @@ import { CurrentUser, type CurrentUserPayload } from '../../auth/decorators/curr
 import { AdminGuard } from '../../auth/guards/admin.guard';
 import { ClerkAuthGuard } from '../../auth/guards/clerk-auth.guard';
 import { OptionalClerkAuthGuard } from '../../auth/guards/optional-clerk-auth.guard';
-import type { CoursesService } from './courses.service';
+import { CoursesService } from './courses.service';
 import type { CreateCourseDto } from './dto/create-course.dto';
 import type { UpdateCourseDto } from './dto/update-course.dto';
 

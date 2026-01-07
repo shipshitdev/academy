@@ -1,4 +1,4 @@
-export interface ICommunitySeed {
+export interface IClassSeed {
   title: string;
   slug: string;
   description: string;

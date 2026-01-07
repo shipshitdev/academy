@@ -51,4 +51,13 @@ export const SubscriptionService = {
       throw new Error(error.message);
     }
   },
+
+  async createPortalSession(): Promise<IBillingCheckoutResponse> {
+    const headers = await getAuthHeaders();
+    const response = await fetch(`${API_URL}/billing/portal`, {
+      method: "POST",
+      headers,
+    });
+    return handleResponse<IBillingCheckoutResponse>(response);
+  },
 };

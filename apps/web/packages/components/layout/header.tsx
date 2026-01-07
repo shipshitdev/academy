@@ -5,17 +5,22 @@ import {
   SignedOut,
   SignInButton,
   SignUpButton,
-  UserButton,
   useAuth,
+  UserButton,
+  useUser,
 } from "@clerk/nextjs";
 import { SubscriptionService } from "@services/subscription.service";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useState } from "react";
 
+const ADMIN_EMAIL = "vincent@genfeed.ai";
+
 export function Header() {
   const { isSignedIn } = useAuth();
+  const { user } = useUser();
   const pathname = usePathname();
+  const isAdmin = user?.emailAddresses?.some((email) => email.emailAddress === ADMIN_EMAIL);
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
 
@@ -71,46 +76,40 @@ export function Header() {
         </Link>
         <nav className="flex items-center gap-6 text-sm">
           <Link
-            href="/communities"
+            href="/courses"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Communities
+            Courses
           </Link>
           <Link
-            href="/pricing"
+            href="/events"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Pricing
+            Events
           </Link>
+          {!(isSignedIn && hasActiveSubscription) && (
+            <Link
+              href="/pricing"
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
+              Pricing
+            </Link>
+          )}
           <Link
             href="/tools"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Tools
           </Link>
-          {isSignedIn && hasActiveSubscription && (
-            <Link
-              href="/events"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Events
-            </Link>
-          )}
-          {isSignedIn && hasActiveSubscription && (
-            <Link
-              href="/bookings"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Book 1-1
-            </Link>
-          )}
           <SignedIn>
-            <Link
-              href="/admin"
-              className="text-muted-foreground transition-colors hover:text-foreground"
-            >
-              Admin
-            </Link>
+            {isAdmin && (
+              <Link
+                href="/admin"
+                className="text-muted-foreground transition-colors hover:text-foreground"
+              >
+                Admin
+              </Link>
+            )}
             <UserButton
               appearance={{
                 elements: {

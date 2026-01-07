@@ -1,30 +1,30 @@
+import mongoose, { Schema } from 'mongoose';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-import mongoose, { Schema } from 'mongoose';
 
-import type { ICommunitySeed, ILessonSeed } from './interfaces/seed-content.interface';
+import type { IClassSeed, ILessonSeed } from './interfaces/seed-content.interface';
 
 const CURRENT_DIR = __dirname || process.cwd();
 const DEFAULT_CONTENT_ROOT = resolve(CURRENT_DIR, '../../../communities');
 const CONTENT_ROOT = process.env.SKOOL_CONTENT_ROOT || DEFAULT_CONTENT_ROOT;
 
-const COMMUNITY_SEEDS: ICommunitySeed[] = [
+const CLASS_SEEDS: IClassSeed[] = [
   {
-    title: 'Vibe Coder',
-    slug: 'vibe-coder',
-    description: 'Build fast, ship real software, and learn the indie workflow.',
+    title: 'Build',
+    slug: 'build',
+    description: 'Learn to vibe code. Ship real apps with AI as your pair programmer.',
     isFree: false,
     priceMonthly: 49,
     isFeatured: true,
     sortOrder: 1,
-    courseTitle: 'Vibe Coder Core',
-    courseSlug: 'vibe-coder-core',
+    courseTitle: 'Learn to Build',
+    courseSlug: 'learn-to-build',
     lessonPaths: [
       'automate-yourself/05-build-product-introduction/01-why-build-products/01-why-build-products.md',
       'automate-yourself/06-build-product-indie-dev/01-introduction/01-introduction.md',
       'automate-yourself/06-build-product-indie-dev/02-agent-folder/02-agent-folder.md',
-      'automate-yourself/06-build-product-indie-dev/04-code-examples/04-code-examples.md',
       'automate-yourself/06-build-product-indie-dev/03-unit-tests/03-unit-tests.md',
+      'automate-yourself/06-build-product-indie-dev/04-code-examples/04-code-examples.md',
       'automate-yourself/06-build-product-indie-dev/05-tech-stack/05-tech-stack.md',
       'automate-yourself/07-build-product-saas/04-mvp-development/04-mvp-development.md',
       'automate-yourself/07-build-product-saas/08-landing-pages/08-landing-pages.md',
@@ -32,15 +32,15 @@ const COMMUNITY_SEEDS: ICommunitySeed[] = [
     ],
   },
   {
-    title: 'Ecom Builder',
-    slug: 'ecom-builder',
-    description: 'Launch and scale ecommerce offers with AI support.',
+    title: 'Sell',
+    slug: 'sell',
+    description: 'Launch and scale ecommerce stores. Learn to sell products online.',
     isFree: false,
     priceMonthly: 49,
     isFeatured: true,
     sortOrder: 2,
-    courseTitle: 'Ecom Builder Core',
-    courseSlug: 'ecom-builder-core',
+    courseTitle: 'Learn to Sell',
+    courseSlug: 'learn-to-sell',
     lessonPaths: [
       'automate-yourself/08-build-product-ecommerce/01-what-is-dropshipping/01-what-is-dropshipping.md',
       'automate-yourself/08-build-product-ecommerce/02-why-ecommerce/02-why-ecommerce.md',
@@ -57,15 +57,15 @@ const COMMUNITY_SEEDS: ICommunitySeed[] = [
     ],
   },
   {
-    title: 'Content Creation',
-    slug: 'content-creation',
-    description: 'Create, distribute, and convert with AI-powered content.',
+    title: 'Distribute',
+    slug: 'distribute',
+    description: 'Generate AI content and publish on socials. Build your audience.',
     isFree: true,
     priceMonthly: 0,
     isFeatured: true,
     sortOrder: 3,
-    courseTitle: 'Content Creation Core',
-    courseSlug: 'content-creation-core',
+    courseTitle: 'Learn to Distribute',
+    courseSlug: 'learn-to-distribute',
     lessonPaths: [
       'create-good-AI-content/00-ai-setup-and-prompt-library.md',
       'create-good-AI-content/01-introduction.md',
@@ -88,7 +88,7 @@ const COMMUNITY_SEEDS: ICommunitySeed[] = [
   },
 ];
 
-const CommunitySchema = new Schema(
+const ClassSchema = new Schema(
   {
     title: String,
     slug: { type: String, unique: true },
@@ -109,7 +109,7 @@ const CourseSchema = new Schema(
     title: String,
     slug: { type: String, unique: true },
     description: String,
-    communityId: String,
+    classId: String,
     sortOrder: Number,
     isPublished: Boolean,
     coverImageUrl: String,
@@ -133,7 +133,7 @@ const LessonSchema = new Schema(
   { timestamps: true },
 );
 
-const CommunityModel = mongoose.model('Community', CommunitySchema);
+const ClassModel = mongoose.model('Class', ClassSchema);
 const CourseModel = mongoose.model('Course', CourseSchema);
 const LessonModel = mongoose.model('Lesson', LessonSchema);
 
@@ -166,30 +166,30 @@ async function seed(): Promise<void> {
 
   await mongoose.connect(mongoUri);
 
-  for (const communitySeed of COMMUNITY_SEEDS) {
-    const community = await CommunityModel.findOneAndUpdate(
-      { slug: communitySeed.slug },
+  for (const classSeed of CLASS_SEEDS) {
+    const classDoc = await ClassModel.findOneAndUpdate(
+      { slug: classSeed.slug },
       {
-        title: communitySeed.title,
-        slug: communitySeed.slug,
-        description: communitySeed.description,
-        isFree: communitySeed.isFree,
-        priceMonthly: communitySeed.isFree ? undefined : communitySeed.priceMonthly,
+        title: classSeed.title,
+        slug: classSeed.slug,
+        description: classSeed.description,
+        isFree: classSeed.isFree,
+        priceMonthly: classSeed.isFree ? undefined : classSeed.priceMonthly,
         isPublished: true,
-        isFeatured: communitySeed.isFeatured,
-        sortOrder: communitySeed.sortOrder,
+        isFeatured: classSeed.isFeatured,
+        sortOrder: classSeed.sortOrder,
         createdBy: 'seed',
       },
       { new: true, upsert: true },
     );
 
     const course = await CourseModel.findOneAndUpdate(
-      { slug: communitySeed.courseSlug },
+      { slug: classSeed.courseSlug },
       {
-        title: communitySeed.courseTitle,
-        slug: communitySeed.courseSlug,
-        description: communitySeed.description,
-        communityId: community._id.toString(),
+        title: classSeed.courseTitle,
+        slug: classSeed.courseSlug,
+        description: classSeed.description,
+        classId: classDoc._id.toString(),
         sortOrder: 0,
         isPublished: true,
         createdBy: 'seed',
@@ -197,9 +197,9 @@ async function seed(): Promise<void> {
       { new: true, upsert: true },
     );
 
-    for (const [index, lessonPath] of communitySeed.lessonPaths.entries()) {
+    for (const [index, lessonPath] of classSeed.lessonPaths.entries()) {
       const lessonData = readLesson(lessonPath);
-      const lessonSlug = `${communitySeed.courseSlug}-${toSlug(lessonData.title)}`;
+      const lessonSlug = `${classSeed.courseSlug}-${toSlug(lessonData.title)}`;
 
       await LessonModel.findOneAndUpdate(
         { slug: lessonSlug },

@@ -16,6 +16,7 @@
     "@agenticindiedev/ui": "0.3.8",
     "@clerk/nextjs": "6.36.5",
     "@hookform/resolvers": "5.2.2",
+    "@tailwindcss/typography": "^0.5.19",
     "axios": "1.13.2",
     "date-fns": "^4.1.0",
     "lucide-react": "0.562.0",

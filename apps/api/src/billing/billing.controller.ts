@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, type CurrentUserPayload } from '../auth/decorators/current-user.decorator';
 import { ClerkAuthGuard } from '../auth/guards/clerk-auth.guard';
 import type { IBillingCheckoutResponse } from '../types/billing';
-import type { BillingService } from './billing.service';
+import { BillingService } from './billing.service';
 
 @ApiTags('billing')
 @Controller('billing')
@@ -19,5 +19,16 @@ export class BillingController {
   ): Promise<IBillingCheckoutResponse> {
     const session = await this.billingService.createCheckoutSession(user.userId);
     return { url: session.url || '' };
+  }
+
+  @Post('portal')
+  @UseGuards(ClerkAuthGuard)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Create Stripe customer portal session' })
+  async createPortalSession(
+    @CurrentUser() user: CurrentUserPayload,
+  ): Promise<IBillingCheckoutResponse> {
+    const session = await this.billingService.createPortalSession(user.userId);
+    return { url: session.url };
   }
 }

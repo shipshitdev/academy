@@ -1,11 +1,14 @@
 "use client";
 
-import { PricingTable, UserProfile, useAuth } from "@clerk/nextjs";
+import { useAuth } from "@clerk/nextjs";
+import { SubscriptionService } from "@services/subscription.service";
 import {
   ArrowRight,
   BookOpen,
   Calendar,
+  Check,
   Code,
+  Loader2,
   Megaphone,
   MessageCircle,
   ShoppingBag,
@@ -14,33 +17,33 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const PATHS = [
   {
     icon: Code,
-    title: "Learn to Build",
+    title: "Build",
     subtitle: "Vibe Coding",
     description:
-      "Start here. Learn to build apps, SaaS, and tools with AI as your pair programmer. All you need is ideas and prompts.",
+      "Learn to vibe code. Ship real apps with AI as your pair programmer. No experience needed.",
     color: "bg-violet-600/50",
     step: "Step 1",
   },
   {
     icon: ShoppingBag,
-    title: "Learn to Sell",
-    subtitle: "Ecommerce & Products",
+    title: "Sell",
+    subtitle: "Ecommerce",
     description:
-      "Now monetize. Launch stores, sell digital products, or build automated businesses. Turn your builds into revenue streams.",
+      "Launch and scale ecommerce stores. Learn to sell products online with AI-powered marketing.",
     color: "bg-amber-500/40",
     step: "Step 2",
   },
   {
     icon: Megaphone,
-    title: "Learn to Scale",
-    subtitle: "AI Content Distribution",
+    title: "Distribute",
+    subtitle: "AI Content",
     description:
-      "Finally, grow. Create content at scale with AI writing, video, and social tools. Build an audience that compounds.",
+      "Generate AI content and publish on socials. Build your audience and grow your reach.",
     color: "bg-emerald-500/40",
     step: "Step 3",
   },
@@ -79,9 +82,83 @@ const FEATURES = [
   },
 ];
 
+const INCLUDED_FEATURES = [
+  "Full access to all courses",
+  "Private Discord community",
+  "Live events & workshops",
+  "1-on-1 coaching calls",
+  "Lesson comments & discussion",
+  "New content monthly",
+  "Cancel anytime",
+];
+
 export default function PricingPage() {
   const { isSignedIn } = useAuth();
-  const [showProfile, setShowProfile] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isCheckingStatus, setIsCheckingStatus] = useState(true);
+  const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
+  const [subscriptionEnd, setSubscriptionEnd] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!isSignedIn) {
+      setIsCheckingStatus(false);
+      setHasActiveSubscription(false);
+      return;
+    }
+
+    SubscriptionService.getMine()
+      .then((subscriptions) => {
+        const activeSub = subscriptions.find((sub) => sub.status === "active");
+        setHasActiveSubscription(!!activeSub);
+        if (activeSub?.currentPeriodEnd) {
+          setSubscriptionEnd(new Date(activeSub.currentPeriodEnd).toLocaleDateString());
+        }
+      })
+      .catch(() => setHasActiveSubscription(false))
+      .finally(() => setIsCheckingStatus(false));
+  }, [isSignedIn]);
+
+  const handleSubscribe = async () => {
+    if (!isSignedIn) {
+      window.location.href = "/sign-up";
+      return;
+    }
+
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { url } = await SubscriptionService.createCheckout();
+      if (url) {
+        window.location.href = url;
+      } else {
+        setError("Failed to create checkout session. Please try again.");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleManageSubscription = async () => {
+    setIsLoading(true);
+    setError(null);
+
+    try {
+      const { url } = await SubscriptionService.createPortalSession();
+      if (url) {
+        window.location.href = url;
+      } else {
+        setError("Failed to open billing portal. Please try again.");
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -132,13 +209,7 @@ export default function PricingPage() {
             </p>
           </div>
 
-          <div className="relative mt-12">
-            {/* Connection line */}
-            <div
-              className="absolute left-1/2 top-8 hidden h-0.5 w-[60%] -translate-x-1/2 bg-gradient-to-r from-violet-600/30 via-amber-500/30 to-emerald-500/30 md:block"
-              aria-hidden="true"
-            />
-
+          <div className="mt-12">
             <div className="grid gap-6 md:grid-cols-3">
               {PATHS.map((path, idx) => (
                 <div
@@ -181,49 +252,105 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Pricing Table */}
+      {/* Pricing Card */}
       <section className="py-12">
-        <div className="mx-auto max-w-4xl px-6">
-          <PricingTable />
-        </div>
-      </section>
+        <div className="mx-auto max-w-xl px-6">
+          <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-xl">
+            {/* Popular badge */}
+            <div className="absolute right-6 top-6">
+              <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/20">
+                Most Popular
+              </span>
+            </div>
 
-      {/* User Profile Section - for managing subscription */}
-      {isSignedIn && (
-        <section className="py-12">
-          <div className="mx-auto max-w-4xl px-6">
-            <div className="mb-8 text-center">
-              <h2 className="text-2xl font-bold text-foreground">
-                <span className="relative inline-block">
-                  <span className="relative z-10">Manage Your Account</span>
-                  <span
-                    className="absolute -bottom-1 left-0 h-3 w-full -skew-x-12 bg-emerald-500/40"
-                    aria-hidden="true"
-                  />
-                </span>
-              </h2>
+            <div className="p-8 pt-12">
+              <h3 className="text-2xl font-bold text-foreground">Full Access Membership</h3>
               <p className="mt-2 text-muted-foreground">
-                View and manage your subscription, billing, and account settings.
+                Everything you need to build, sell, and scale with AI.
+              </p>
+
+              <div className="mt-6 flex items-baseline gap-2">
+                <span className="text-5xl font-bold tracking-tight text-foreground">$49</span>
+                <span className="text-muted-foreground">/month</span>
+              </div>
+
+              {/* Features list */}
+              <ul className="mt-8 space-y-3">
+                {INCLUDED_FEATURES.map((feature) => (
+                  <li key={feature} className="flex items-center gap-3 text-sm text-foreground">
+                    <Check className="h-5 w-5 flex-shrink-0 text-primary" />
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+
+              {/* Error message */}
+              {error && (
+                <div className="mt-6 rounded-lg bg-destructive/10 p-3 text-sm text-destructive">
+                  {error}
+                </div>
+              )}
+
+              {/* CTA Button */}
+              <div className="mt-8">
+                {isCheckingStatus ? (
+                  <div className="flex h-14 items-center justify-center rounded-xl bg-muted">
+                    <Loader2 className="h-5 w-5 animate-spin text-muted-foreground" />
+                  </div>
+                ) : hasActiveSubscription ? (
+                  <div className="space-y-4">
+                    <div className="rounded-xl bg-emerald-500/10 p-4 text-center">
+                      <p className="font-medium text-emerald-600 dark:text-emerald-400">
+                        You have an active subscription
+                      </p>
+                      {subscriptionEnd && (
+                        <p className="mt-1 text-sm text-muted-foreground">
+                          Renews on {subscriptionEnd}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={handleManageSubscription}
+                      disabled={isLoading}
+                      className="flex w-full items-center justify-center gap-2 rounded-xl border border-border bg-background px-6 py-4 text-base font-semibold text-foreground transition-colors hover:bg-muted disabled:opacity-50"
+                    >
+                      {isLoading ? (
+                        <Loader2 className="h-5 w-5 animate-spin" />
+                      ) : (
+                        <>
+                          Manage Subscription
+                          <ArrowRight className="h-5 w-5" />
+                        </>
+                      )}
+                    </button>
+                  </div>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={handleSubscribe}
+                    disabled={isLoading}
+                    className="group flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-6 py-4 text-base font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30 disabled:opacity-50"
+                  >
+                    {isLoading ? (
+                      <Loader2 className="h-5 w-5 animate-spin" />
+                    ) : (
+                      <>
+                        {isSignedIn ? "Subscribe Now" : "Get Started"}
+                        <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                      </>
+                    )}
+                  </button>
+                )}
+              </div>
+
+              <p className="mt-4 text-center text-xs text-muted-foreground">
+                Secure payment powered by Stripe. Cancel anytime.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={() => setShowProfile(!showProfile)}
-              className="mx-auto mb-6 flex items-center gap-2 rounded-lg border border-border bg-card px-6 py-3 text-sm font-medium text-foreground transition-colors hover:border-primary/30 hover:bg-card/80"
-            >
-              {showProfile ? "Hide" : "Show"} Account Settings
-              <ArrowRight
-                className={`h-4 w-4 transition-transform ${showProfile ? "rotate-90" : ""}`}
-              />
-            </button>
-            {showProfile && (
-              <div className="rounded-2xl border border-border bg-card p-6">
-                <UserProfile />
-              </div>
-            )}
           </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Features Grid */}
       <section className="py-20">
@@ -282,7 +409,7 @@ export default function PricingPage() {
           </p>
           <div className="mt-10">
             <Link
-              href={isSignedIn ? "/communities" : "/sign-up"}
+              href={isSignedIn ? "/courses" : "/sign-up"}
               className="group inline-flex items-center gap-2 rounded-lg bg-primary px-8 py-4 text-lg font-semibold text-primary-foreground shadow-lg shadow-primary/25 transition-all hover:bg-primary/90 hover:shadow-xl hover:shadow-primary/30"
             >
               {isSignedIn ? "Go to Your Courses" : "Get Started Now"}

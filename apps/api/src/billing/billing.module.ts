@@ -16,6 +16,7 @@ import { StripeWebhookController } from './stripe-webhook.controller';
   imports: [MongooseModule.forFeature([{ name: Subscription.name, schema: SubscriptionSchema }])],
   controllers: [BillingController, StripeWebhookController],
   providers: [BillingService, SubscriptionsService],
+  exports: [BillingService],
 })
 export class BillingModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {

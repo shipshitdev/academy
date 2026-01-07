@@ -1,10 +1,10 @@
 import { Controller, Headers, Post, Req } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import type Stripe from 'stripe';
-import type { SubscriptionsService } from '../collections/subscriptions/subscriptions.service';
-import type { ConfigService } from '../config/config.service';
+import { SubscriptionsService } from '../collections/subscriptions/subscriptions.service';
+import { ConfigService } from '../config/config.service';
 import type { IRawBodyRequest } from '../types/requests';
-import type { BillingService } from './billing.service';
+import { BillingService } from './billing.service';
 
 @ApiTags('webhooks')
 @Controller('webhooks/stripe')

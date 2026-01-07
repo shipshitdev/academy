@@ -6,7 +6,7 @@ import { ClerkAuthGuard } from '../../auth/guards/clerk-auth.guard';
 import { OptionalClerkAuthGuard } from '../../auth/guards/optional-clerk-auth.guard';
 import type { CreateEventDto } from './dto/create-event.dto';
 import type { UpdateEventDto } from './dto/update-event.dto';
-import type { EventsService } from './events.service';
+import { EventsService } from './events.service';
 
 @ApiTags('events')
 @Controller('events')

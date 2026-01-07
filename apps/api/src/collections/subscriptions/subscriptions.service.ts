@@ -29,4 +29,8 @@ export class SubscriptionsService {
   async findByUser(userId: string): Promise<Subscription[]> {
     return this.subscriptionModel.find({ userId }).sort({ createdAt: -1 });
   }
+
+  async findById(id: string): Promise<SubscriptionDocument | null> {
+    return this.subscriptionModel.findById(id);
+  }
 }

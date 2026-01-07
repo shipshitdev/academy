@@ -7,7 +7,7 @@ import {
   Subscription,
   type SubscriptionDocument,
 } from '../collections/subscriptions/schemas/subscription.schema';
-import type { ConfigService } from '../config/config.service';
+import { ConfigService } from '../config/config.service';
 
 @Injectable()
 export class BillingService {
@@ -87,5 +87,25 @@ export class BillingService {
     } catch {
       return undefined;
     }
+  }
+
+  async cancelSubscription(stripeSubscriptionId: string): Promise<Stripe.Subscription> {
+    return this.stripe.subscriptions.update(stripeSubscriptionId, {
+      cancel_at_period_end: true,
+    });
+  }
+
+  async createPortalSession(userId: string): Promise<Stripe.BillingPortal.Session> {
+    const customerId = await this.getOrCreateCustomer(userId);
+
+    const appUrl =
+      this.configService.getOptional('APP_URL') ||
+      this.configService.getOptional('NEXT_PUBLIC_APP_URL') ||
+      'http://localhost:3000';
+
+    return this.stripe.billingPortal.sessions.create({
+      customer: customerId,
+      return_url: `${appUrl}/pricing`,
+    });
   }
 }

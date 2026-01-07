@@ -12,7 +12,7 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, type CurrentUserPayload } from '../../auth/decorators/current-user.decorator';
 import { ClerkAuthGuard } from '../../auth/guards/clerk-auth.guard';
-import type { CommentsService } from './comments.service';
+import { CommentsService } from './comments.service';
 import type { CreateCommentDto } from './dto/create-comment.dto';
 import type { UpdateCommentDto } from './dto/update-comment.dto';
 

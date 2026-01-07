@@ -3,7 +3,7 @@ import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CurrentUser, type CurrentUserPayload } from '../../auth/decorators/current-user.decorator';
 import { ClerkAuthGuard } from '../../auth/guards/clerk-auth.guard';
 import type { CreateProgressDto } from './dto/create-progress.dto';
-import type { ProgressesService } from './progresses.service';
+import { ProgressesService } from './progresses.service';
 
 @ApiTags('progress')
 @Controller('progress')

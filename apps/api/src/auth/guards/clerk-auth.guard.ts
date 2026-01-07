@@ -5,7 +5,7 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import type { ConfigService } from '../../config/config.service';
+import { ConfigService } from '../../config/config.service';
 
 @Injectable()
 export class ClerkAuthGuard implements CanActivate {

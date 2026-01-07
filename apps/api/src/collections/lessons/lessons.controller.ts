@@ -16,7 +16,7 @@ import { ClerkAuthGuard } from '../../auth/guards/clerk-auth.guard';
 import { OptionalClerkAuthGuard } from '../../auth/guards/optional-clerk-auth.guard';
 import type { CreateLessonDto } from './dto/create-lesson.dto';
 import type { UpdateLessonDto } from './dto/update-lesson.dto';
-import type { LessonsService } from './lessons.service';
+import { LessonsService } from './lessons.service';
 
 @ApiTags('lessons')
 @Controller('lessons')

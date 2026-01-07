@@ -1,11 +1,11 @@
 import { createClerkClient } from '@clerk/backend';
+import type { CreateCommentDto } from '@collections/comments/dto/create-comment.dto';
+import type { UpdateCommentDto } from '@collections/comments/dto/update-comment.dto';
+import { Comment, type CommentDocument } from '@collections/comments/schemas/comment.schema';
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import type { Model } from 'mongoose';
-import type { ConfigService } from '../../config/config.service';
-import type { CreateCommentDto } from './dto/create-comment.dto';
-import type { UpdateCommentDto } from './dto/update-comment.dto';
-import { Comment, type CommentDocument } from './schemas/comment.schema';
+import { ConfigService } from '../../config/config.service';
 
 @Injectable()
 export class CommentsService {
