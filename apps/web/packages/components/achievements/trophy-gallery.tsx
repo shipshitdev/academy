@@ -64,7 +64,7 @@ export function TrophyGallery() {
       acc[achievement.category].push(achievement);
       return acc;
     },
-    {} as Record<AchievementCategory, AchievementWithStatus[]>,
+    {} as Record<AchievementCategory, AchievementWithStatus[]>
   );
 
   if (loading) {

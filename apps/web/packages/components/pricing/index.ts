@@ -1,1 +1,1 @@
-export { PricingCard, PRICING_AMOUNT, PRICING_FEATURES, INCLUDED_FEATURES } from "./pricing-card";
+export { INCLUDED_FEATURES, PRICING_AMOUNT, PRICING_FEATURES, PricingCard } from "./pricing-card";

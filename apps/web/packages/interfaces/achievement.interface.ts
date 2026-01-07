@@ -1,5 +1,5 @@
-export type AchievementCategory = 'completion' | 'shipping' | 'engagement';
-export type AchievementRarity = 'common' | 'rare' | 'epic' | 'legendary';
+export type AchievementCategory = "completion" | "shipping" | "engagement";
+export type AchievementRarity = "common" | "rare" | "epic" | "legendary";
 
 export interface AchievementCriteria {
   type: string;

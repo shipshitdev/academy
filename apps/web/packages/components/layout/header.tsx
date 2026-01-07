@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  SignedIn,
-  SignedOut,
-  useAuth,
-  UserButton,
-  useUser,
-} from "@clerk/nextjs";
+import { SignedIn, SignedOut, UserButton, useAuth, useUser } from "@clerk/nextjs";
 import { SubscriptionService } from "@services/subscription.service";
 import Link from "next/link";
 import { usePathname } from "next/navigation";

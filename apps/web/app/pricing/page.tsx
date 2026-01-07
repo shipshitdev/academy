@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@clerk/nextjs";
-import { PricingCard, INCLUDED_FEATURES } from "@components/pricing";
+import { PricingCard } from "@components/pricing";
 import {
   ArrowRight,
   BookOpen,

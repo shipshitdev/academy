@@ -49,10 +49,9 @@ function LessonSidebar({
         </p>
 
         <nav className="space-y-1">
-          {lessons.map((lesson, index) => {
+          {lessons.map((lesson, _index) => {
             const isCurrent = lesson.slug === currentLessonSlug;
-            const isAccessible =
-              (lesson.isPreview || isSubscribed) && !lesson.isLocked;
+            const isAccessible = (lesson.isPreview || isSubscribed) && !lesson.isLocked;
 
             if (lesson.isLocked) {
               return (
@@ -323,10 +322,7 @@ export default function LessonPage() {
                   {isSignedIn ? "Subscribe to Access" : "Sign In to Subscribe"}
                 </Button>
               )}
-              <Link
-                href="/courses"
-                className="text-sm text-muted-foreground hover:text-foreground"
-              >
+              <Link href="/courses" className="text-sm text-muted-foreground hover:text-foreground">
                 Back to courses
               </Link>
             </div>

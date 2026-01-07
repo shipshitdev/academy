@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent } from "@agenticindiedev/ui";
-import { BookOpen, Calendar, type LucideIcon, GraduationCap, Users } from "lucide-react";
+import { BookOpen, Calendar, GraduationCap, type LucideIcon, Users } from "lucide-react";
 import Link from "next/link";
 
 const ADMIN_LINKS: {
@@ -71,41 +71,41 @@ const colorClasses = {
 export default function AdminHomePage() {
   return (
     <div className="space-y-8">
-        <div>
-          <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
-          <p className="mt-2 text-muted-foreground">
-            Manage your communities, courses, lessons, and events.
-          </p>
-        </div>
-        <div className="grid gap-6 md:grid-cols-2">
-          {ADMIN_LINKS.map((link) => {
-            const colors = colorClasses[link.color];
-            return (
-              <Link key={link.href} href={link.href}>
-                <Card
-                  variant="outline"
-                  hover
-                  className={`group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${colors.shadow} ${colors.border}`}
-                >
-                  <CardContent className="flex items-start gap-5 p-6">
-                    <div
-                      className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${colors.bg} transition-transform duration-300 group-hover:scale-110`}
-                    >
-                      <link.icon
-                        className={`h-7 w-7 ${colors.text} transition-transform duration-300 group-hover:rotate-6`}
-                      />
-                    </div>
-                    <div className="space-y-1">
-                      <h3 className="text-lg font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">
-                        {link.label}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">{link.description}</p>
-                    </div>
-                  </CardContent>
-                </Card>
-              </Link>
-            );
-          })}
+      <div>
+        <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
+        <p className="mt-2 text-muted-foreground">
+          Manage your communities, courses, lessons, and events.
+        </p>
+      </div>
+      <div className="grid gap-6 md:grid-cols-2">
+        {ADMIN_LINKS.map((link) => {
+          const colors = colorClasses[link.color];
+          return (
+            <Link key={link.href} href={link.href}>
+              <Card
+                variant="outline"
+                hover
+                className={`group transition-all duration-300 hover:-translate-y-1 hover:shadow-xl ${colors.shadow} ${colors.border}`}
+              >
+                <CardContent className="flex items-start gap-5 p-6">
+                  <div
+                    className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-xl ${colors.bg} transition-transform duration-300 group-hover:scale-110`}
+                  >
+                    <link.icon
+                      className={`h-7 w-7 ${colors.text} transition-transform duration-300 group-hover:rotate-6`}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <h3 className="text-lg font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">
+                      {link.label}
+                    </h3>
+                    <p className="text-sm text-muted-foreground">{link.description}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
+          );
+        })}
       </div>
     </div>
   );

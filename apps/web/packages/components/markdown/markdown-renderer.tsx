@@ -1,10 +1,10 @@
 "use client";
 
 import type { IMarkdownRendererProps } from "@interfaces/markdown-renderer.interface";
-import { ChevronDown, Copy, Check, ExternalLink } from "lucide-react";
-import { useState, type ReactNode } from "react";
-import ReactMarkdown from "react-markdown";
+import { Check, ChevronDown, Copy, ExternalLink } from "lucide-react";
+import { type ReactNode, useState } from "react";
 import type { Components } from "react-markdown";
+import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 import rehypeRaw from "rehype-raw";
@@ -243,7 +243,7 @@ const components: Components = {
   },
 
   // Code blocks with syntax highlighting
-  code: ({ className, children, ...props }) => {
+  code: ({ className, children }) => {
     const match = /language-(\w+)/.exec(className || "");
     const isInline = !match && !className;
 
@@ -258,7 +258,11 @@ const components: Components = {
     const language = match ? match[1] : "";
     const codeString = String(children).replace(/\n$/, "");
 
-    return <CodeBlock language={language} isPrompt={language === "prompt"}>{codeString}</CodeBlock>;
+    return (
+      <CodeBlock language={language} isPrompt={language === "prompt"}>
+        {codeString}
+      </CodeBlock>
+    );
   },
 
   // Pre tag - just pass through, code handles it

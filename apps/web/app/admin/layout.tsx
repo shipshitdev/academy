@@ -18,9 +18,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   }
 
   // Check if user is admin
-  const isAdmin = user?.emailAddresses?.some(
-    (email) => email.emailAddress === ADMIN_EMAIL
-  );
+  const isAdmin = user?.emailAddresses?.some((email) => email.emailAddress === ADMIN_EMAIL);
 
   if (!isAdmin) {
     redirect("/");

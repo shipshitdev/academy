@@ -46,18 +46,17 @@ export function RecentAchievements({ limit = 3 }: RecentAchievementsProps) {
   const totalCount = achievements.length;
 
   // Get recent earned achievements as AchievementWithStatus
-  const recentAchievementsWithStatus = recentEarned
-    .reduce<AchievementWithStatus[]>((acc, ua) => {
-      const achievement = allAchievements.find((a) => a._id === ua.achievementId);
-      if (achievement) {
-        acc.push({
-          ...achievement,
-          earned: true,
-          earnedAt: ua.earnedAt,
-        });
-      }
-      return acc;
-    }, []);
+  const recentAchievementsWithStatus = recentEarned.reduce<AchievementWithStatus[]>((acc, ua) => {
+    const achievement = allAchievements.find((a) => a._id === ua.achievementId);
+    if (achievement) {
+      acc.push({
+        ...achievement,
+        earned: true,
+        earnedAt: ua.earnedAt,
+      });
+    }
+    return acc;
+  }, []);
 
   if (loading) {
     return (
@@ -123,7 +122,9 @@ export function RecentAchievements({ limit = 3 }: RecentAchievementsProps) {
         </div>
       ) : (
         <div className="text-sm text-zinc-500">
-          <p>You&apos;ve earned {earnedCount} {earnedCount === 1 ? "trophy" : "trophies"}!</p>
+          <p>
+            You&apos;ve earned {earnedCount} {earnedCount === 1 ? "trophy" : "trophies"}!
+          </p>
         </div>
       )}
     </div>

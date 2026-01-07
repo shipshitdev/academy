@@ -185,10 +185,7 @@ export function PricingCard({
         {featureStyle === "icons" ? (
           <div className="mt-8 grid gap-3 sm:grid-cols-2">
             {PRICING_FEATURES.map((feature) => (
-              <div
-                key={feature.text}
-                className="flex items-center gap-3 text-sm text-foreground"
-              >
+              <div key={feature.text} className="flex items-center gap-3 text-sm text-foreground">
                 <div className="flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg bg-primary/10">
                   <feature.icon className="h-4 w-4 text-primary" />
                 </div>

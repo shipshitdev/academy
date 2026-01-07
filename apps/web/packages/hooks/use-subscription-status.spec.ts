@@ -1,10 +1,11 @@
 /**
  * @vitest-environment jsdom
  */
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
-import { renderHook, waitFor } from "@testing-library/react";
-import { useSubscriptionStatus } from "./use-subscription-status";
+
 import { SubscriptionService } from "@services/subscription.service";
+import { renderHook, waitFor } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { useSubscriptionStatus } from "./use-subscription-status";
 
 // Mock dependencies
 vi.mock("@clerk/nextjs", () => ({

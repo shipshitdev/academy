@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MembershipService } from "./membership.service";
 
 const API_URL = "http://localhost:3001";
@@ -117,7 +117,9 @@ describe("MembershipService", () => {
         json: () => Promise.resolve({ message: "Membership not found" }),
       } as Response);
 
-      await expect(MembershipService.delete("membership-1")).rejects.toThrow("Membership not found");
+      await expect(MembershipService.delete("membership-1")).rejects.toThrow(
+        "Membership not found"
+      );
     });
 
     it("should throw generic error when json parsing fails", async () => {

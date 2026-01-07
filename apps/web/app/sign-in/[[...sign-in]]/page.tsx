@@ -29,8 +29,7 @@ export default function SignInPage() {
             formFieldLabel: "text-[hsl(0_0%_98%)]",
             formFieldInput:
               "bg-[hsl(0_0%_10%)] border-[hsl(0_0%_14%)] text-[hsl(0_0%_98%)] focus:ring-[hsl(262_83%_58%)] focus:border-[hsl(262_83%_58%)]",
-            formButtonPrimary:
-              "bg-[hsl(262_83%_58%)] hover:bg-[hsl(262_83%_50%)] text-white",
+            formButtonPrimary: "bg-[hsl(262_83%_58%)] hover:bg-[hsl(262_83%_50%)] text-white",
             footerActionLink: "text-[hsl(262_83%_58%)] hover:text-[hsl(262_83%_68%)]",
             identityPreviewEditButton: "text-[hsl(262_83%_58%)]",
           },
