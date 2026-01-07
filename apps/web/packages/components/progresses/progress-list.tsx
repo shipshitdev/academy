@@ -6,16 +6,16 @@ import { Progress } from "@interfaces/progress.interface";
 import { Button } from "@agenticindiedev/ui";
 
 export function ProgressList() {
-  const [progresses, setProgresss] = useState<Progress[]>([]);
+  const [progresses, setProgresses] = useState<Progress[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchProgresss = async () => {
+  const fetchProgresses = async () => {
     try {
       setLoading(true);
       const controller = new AbortController();
-      const data = await ProgressService.getAll({ signal: controller.signal });
-      setProgresss(data);
+      const data = await ProgressService.getMine({ signal: controller.signal });
+      setProgresses(data);
       setError(null);
     } catch (err) {
       if (err instanceof Error && err.name !== "AbortError") {
@@ -29,8 +29,8 @@ export function ProgressList() {
   useEffect(() => {
     const controller = new AbortController();
 
-    ProgressService.getAll({ signal: controller.signal })
-      .then(setProgresss)
+    ProgressService.getMine({ signal: controller.signal })
+      .then(setProgresses)
       .catch((err) => {
         if (err.name !== "AbortError") {
           setError(err.message);
@@ -44,7 +44,7 @@ export function ProgressList() {
   const handleDelete = async (id: string) => {
     try {
       await ProgressService.delete(id);
-      fetchProgresss();
+      fetchProgresses();
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to delete");
     }
@@ -69,38 +69,29 @@ export function ProgressList() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Progresss</h2>
-        <Button onClick={() => window.location.href = "/progresses/new"}>
-          Add Progress
-        </Button>
+        <h2 className="text-2xl font-bold">My Progress</h2>
       </div>
 
       {progresses.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
-          No progresses yet. Create your first one!
+          No progress yet. Start learning!
         </div>
       ) : (
         <div className="space-y-2">
           {progresses.map((progress) => (
             <div key={progress._id} className="p-4 border rounded-lg flex justify-between items-center">
               <div>
-                <h3 className="font-medium">{progress.title}</h3>
-                {progress.description && (
-                  <p className="text-sm text-gray-500">{progress.description}</p>
+                <h3 className="font-medium">Lesson: {progress.lessonId}</h3>
+                {progress.completedAt && (
+                  <p className="text-sm text-gray-500">Completed: {new Date(progress.completedAt).toLocaleDateString()}</p>
                 )}
               </div>
               <div className="flex gap-2">
                 <Button
                   variant="ghost"
-                  onClick={() => window.location.href = `/progresses/${progress._id}`}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="ghost"
                   onClick={() => handleDelete(progress._id)}
                 >
-                  Delete
+                  Remove
                 </Button>
               </div>
             </div>

@@ -3,7 +3,7 @@ import remarkGfm from "remark-gfm";
 
 import type { IMarkdownRendererProps } from "@interfaces/markdown-renderer.interface";
 
-export function MarkdownRenderer({ content }: IMarkdownRendererProps): JSX.Element {
+export function MarkdownRenderer({ content }: IMarkdownRendererProps) {
   return (
     <div className="prose max-w-none">
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{content}</ReactMarkdown>

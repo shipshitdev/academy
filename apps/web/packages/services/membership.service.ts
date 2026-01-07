@@ -1,4 +1,5 @@
 import { Membership } from "@interfaces/membership.interface";
+import type { IRequestOptions } from "@interfaces/request-options.interface";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
@@ -30,11 +31,24 @@ export const MembershipService = {
     return handleResponse<Membership>(response);
   },
 
-  async getMine(): Promise<Membership[]> {
+  async getMine(options?: IRequestOptions): Promise<Membership[]> {
     const headers = await getAuthHeaders();
     const response = await fetch(`${API_URL}/memberships/me`, {
       headers,
+      signal: options?.signal,
     });
     return handleResponse<Membership[]>(response);
+  },
+
+  async delete(id: string): Promise<void> {
+    const headers = await getAuthHeaders();
+    const response = await fetch(`${API_URL}/memberships/${id}`, {
+      method: "DELETE",
+      headers,
+    });
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: "Delete failed" }));
+      throw new Error(error.message);
+    }
   },
 };

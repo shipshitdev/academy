@@ -28,7 +28,7 @@ function toApiPayload(values: IEventFormValues): Partial<Event> {
   };
 }
 
-export default function NewEventPage(): JSX.Element {
+export default function NewEventPage() {
   const router = useRouter();
   const [communities, setCommunities] = useState<Community[]>([]);
 

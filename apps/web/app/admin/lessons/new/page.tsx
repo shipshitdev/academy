@@ -19,7 +19,7 @@ const DEFAULT_VALUES: ILessonFormValues = {
   content: "",
 };
 
-export default function NewLessonPage(): JSX.Element {
+export default function NewLessonPage() {
   const router = useRouter();
   const [courses, setCourses] = useState<Course[]>([]);
 

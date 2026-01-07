@@ -14,7 +14,7 @@ export function SubscriptionList() {
     try {
       setLoading(true);
       const controller = new AbortController();
-      const data = await SubscriptionService.getAll({ signal: controller.signal });
+      const data = await SubscriptionService.getMine({ signal: controller.signal });
       setSubscriptions(data);
       setError(null);
     } catch (err) {
@@ -29,7 +29,7 @@ export function SubscriptionList() {
   useEffect(() => {
     const controller = new AbortController();
 
-    SubscriptionService.getAll({ signal: controller.signal })
+    SubscriptionService.getMine({ signal: controller.signal })
       .then(setSubscriptions)
       .catch((err) => {
         if (err.name !== "AbortError") {
@@ -41,12 +41,12 @@ export function SubscriptionList() {
     return () => controller.abort();
   }, []);
 
-  const handleDelete = async (id: string) => {
+  const handleCancel = async (id: string) => {
     try {
-      await SubscriptionService.delete(id);
+      await SubscriptionService.cancel(id);
       fetchSubscriptions();
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to delete");
+      setError(err instanceof Error ? err.message : "Failed to cancel");
     }
   };
 
@@ -69,39 +69,34 @@ export function SubscriptionList() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Subscriptions</h2>
-        <Button onClick={() => window.location.href = "/subscriptions/new"}>
-          Add Subscription
-        </Button>
+        <h2 className="text-2xl font-bold">My Subscriptions</h2>
       </div>
 
       {subscriptions.length === 0 ? (
         <div className="text-center py-8 text-gray-500">
-          No subscriptions yet. Create your first one!
+          No subscriptions yet.
         </div>
       ) : (
         <div className="space-y-2">
           {subscriptions.map((subscription) => (
             <div key={subscription._id} className="p-4 border rounded-lg flex justify-between items-center">
               <div>
-                <h3 className="font-medium">{subscription.title}</h3>
-                {subscription.description && (
-                  <p className="text-sm text-gray-500">{subscription.description}</p>
+                <h3 className="font-medium">Status: {subscription.status}</h3>
+                {subscription.currentPeriodEnd && (
+                  <p className="text-sm text-gray-500">
+                    Renews: {new Date(subscription.currentPeriodEnd).toLocaleDateString()}
+                  </p>
                 )}
               </div>
               <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  onClick={() => window.location.href = `/subscriptions/${subscription._id}`}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="ghost"
-                  onClick={() => handleDelete(subscription._id)}
-                >
-                  Delete
-                </Button>
+                {!subscription.cancelAtPeriodEnd && (
+                  <Button
+                    variant="ghost"
+                    onClick={() => handleCancel(subscription._id)}
+                  >
+                    Cancel
+                  </Button>
+                )}
               </div>
             </div>
           ))}

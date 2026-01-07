@@ -24,7 +24,7 @@ export function CommunityForm({
   initialValues,
   submitLabel,
   onSubmit,
-}: ICommunityFormProps): JSX.Element {
+}: ICommunityFormProps) {
   const [values, setValues] = useState<ICommunityFormValues>(EMPTY_VALUES);
   const [saving, setSaving] = useState(false);
 

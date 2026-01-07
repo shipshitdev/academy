@@ -51,7 +51,7 @@ function toApiPayload(values: IEventFormValues): Partial<Event> {
   };
 }
 
-export default function EditEventPage(): JSX.Element {
+export default function EditEventPage() {
   const params = useParams();
   const id = params.id as string;
   const [values, setValues] = useState<IEventFormValues>(DEFAULT_VALUES);

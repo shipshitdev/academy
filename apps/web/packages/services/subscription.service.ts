@@ -1,5 +1,6 @@
 import { Subscription } from "@interfaces/subscription.interface";
 import type { IBillingCheckoutResponse } from "@interfaces/billing.interface";
+import type { IRequestOptions } from "@interfaces/request-options.interface";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
@@ -21,10 +22,11 @@ async function handleResponse<T>(response: Response): Promise<T> {
 }
 
 export const SubscriptionService = {
-  async getMine(): Promise<Subscription[]> {
+  async getMine(options?: IRequestOptions): Promise<Subscription[]> {
     const headers = await getAuthHeaders();
     const response = await fetch(`${API_URL}/subscriptions/me`, {
       headers,
+      signal: options?.signal,
     });
     return handleResponse<Subscription[]>(response);
   },
@@ -36,5 +38,17 @@ export const SubscriptionService = {
       headers,
     });
     return handleResponse<IBillingCheckoutResponse>(response);
+  },
+
+  async cancel(id: string): Promise<void> {
+    const headers = await getAuthHeaders();
+    const response = await fetch(`${API_URL}/subscriptions/${id}/cancel`, {
+      method: "POST",
+      headers,
+    });
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: "Cancel failed" }));
+      throw new Error(error.message);
+    }
   },
 };

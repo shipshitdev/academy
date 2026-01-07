@@ -14,7 +14,7 @@ export function MembershipList() {
     try {
       setLoading(true);
       const controller = new AbortController();
-      const data = await MembershipService.getAll({ signal: controller.signal });
+      const data = await MembershipService.getMine({ signal: controller.signal });
       setMemberships(data);
       setError(null);
     } catch (err) {
@@ -29,7 +29,7 @@ export function MembershipList() {
   useEffect(() => {
     const controller = new AbortController();
 
-    MembershipService.getAll({ signal: controller.signal })
+    MembershipService.getMine({ signal: controller.signal })
       .then(setMemberships)
       .catch((err) => {
         if (err.name !== "AbortError") {
@@ -69,10 +69,7 @@ export function MembershipList() {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h2 className="text-2xl font-bold">Memberships</h2>
-        <Button onClick={() => window.location.href = "/memberships/new"}>
-          Add Membership
-        </Button>
+        <h2 className="text-2xl font-bold">My Memberships</h2>
       </div>
 
       {memberships.length === 0 ? (
@@ -84,23 +81,15 @@ export function MembershipList() {
           {memberships.map((membership) => (
             <div key={membership._id} className="p-4 border rounded-lg flex justify-between items-center">
               <div>
-                <h3 className="font-medium">{membership.title}</h3>
-                {membership.description && (
-                  <p className="text-sm text-gray-500">{membership.description}</p>
-                )}
+                <h3 className="font-medium">Community: {membership.communityId}</h3>
+                <p className="text-sm text-gray-500">Status: {membership.status}</p>
               </div>
               <div className="flex gap-2">
                 <Button
                   variant="ghost"
-                  onClick={() => window.location.href = `/memberships/${membership._id}`}
-                >
-                  Edit
-                </Button>
-                <Button
-                  variant="ghost"
                   onClick={() => handleDelete(membership._id)}
                 >
-                  Delete
+                  Leave
                 </Button>
               </div>
             </div>

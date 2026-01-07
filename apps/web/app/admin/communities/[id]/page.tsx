@@ -33,7 +33,7 @@ function toFormValues(community: Community): ICommunityFormValues {
   };
 }
 
-export default function EditCommunityPage(): JSX.Element {
+export default function EditCommunityPage() {
   const params = useParams();
   const id = params.id as string;
   const [values, setValues] = useState<ICommunityFormValues>(DEFAULT_VALUES);

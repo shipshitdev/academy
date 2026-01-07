@@ -33,7 +33,7 @@ function toFormValues(lesson: Lesson): ILessonFormValues {
   };
 }
 
-export default function EditLessonPage(): JSX.Element {
+export default function EditLessonPage() {
   const params = useParams();
   const id = params.id as string;
   const [values, setValues] = useState<ILessonFormValues>(DEFAULT_VALUES);

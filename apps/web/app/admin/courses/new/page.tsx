@@ -18,7 +18,7 @@ const DEFAULT_VALUES: ICourseFormValues = {
   coverImageUrl: "",
 };
 
-export default function NewCoursePage(): JSX.Element {
+export default function NewCoursePage() {
   const router = useRouter();
   const [communities, setCommunities] = useState<Community[]>([]);
 

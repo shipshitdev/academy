@@ -14,7 +14,7 @@ export function CourseList() {
     try {
       setLoading(true);
       const controller = new AbortController();
-      const data = await CourseService.getAll({ signal: controller.signal });
+      const data = await CourseService.getAll(undefined, { signal: controller.signal });
       setCourses(data);
       setError(null);
     } catch (err) {
@@ -29,7 +29,7 @@ export function CourseList() {
   useEffect(() => {
     const controller = new AbortController();
 
-    CourseService.getAll({ signal: controller.signal })
+    CourseService.getAll(undefined, { signal: controller.signal })
       .then(setCourses)
       .catch((err) => {
         if (err.name !== "AbortError") {

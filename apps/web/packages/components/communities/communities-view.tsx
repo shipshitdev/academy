@@ -18,7 +18,7 @@ function CommunityCard({
   joinedIds,
   onJoin,
   onSubscribe,
-}: ICommunityCardProps): JSX.Element {
+}: ICommunityCardProps) {
   const isFree = community.isFree;
   const isJoined = joinedIds.has(community._id);
   const price = community.priceMonthly || 49;
@@ -74,7 +74,7 @@ function CommunityCard({
   );
 }
 
-function CommunityCardSkeleton(): JSX.Element {
+function CommunityCardSkeleton() {
   return (
     <Card variant="outline" className="p-6">
       <CardContent className="p-0 space-y-4">
@@ -94,7 +94,7 @@ function CommunityCardSkeleton(): JSX.Element {
   );
 }
 
-export function CommunitiesView(): JSX.Element {
+export function CommunitiesView() {
   const { isSignedIn } = useAuth();
   const { isActive: isSubscribed } = useSubscriptionStatus();
   const [communities, setCommunities] = useState<Community[]>([]);

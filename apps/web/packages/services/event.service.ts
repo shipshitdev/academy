@@ -1,4 +1,5 @@
 import { Event } from "@interfaces/event.interface";
+import type { IRequestOptions } from "@interfaces/request-options.interface";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
@@ -20,26 +21,29 @@ async function handleResponse<T>(response: Response): Promise<T> {
 }
 
 export const EventService = {
-  async getAll(): Promise<Event[]> {
+  async getAll(options?: IRequestOptions): Promise<Event[]> {
     const headers = await getAuthHeaders();
     const response = await fetch(`${API_URL}/events`, {
       headers,
+      signal: options?.signal,
     });
     return handleResponse<Event[]>(response);
   },
 
-  async getAdminAll(): Promise<Event[]> {
+  async getAdminAll(options?: IRequestOptions): Promise<Event[]> {
     const headers = await getAuthHeaders();
     const response = await fetch(`${API_URL}/events/admin`, {
       headers,
+      signal: options?.signal,
     });
     return handleResponse<Event[]>(response);
   },
 
-  async getAdminById(id: string): Promise<Event> {
+  async getAdminById(id: string, options?: IRequestOptions): Promise<Event> {
     const headers = await getAuthHeaders();
     const response = await fetch(`${API_URL}/events/admin/${id}`, {
       headers,
+      signal: options?.signal,
     });
     return handleResponse<Event>(response);
   },

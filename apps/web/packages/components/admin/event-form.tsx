@@ -24,7 +24,7 @@ export function EventForm({
   communities,
   submitLabel,
   onSubmit,
-}: IEventFormProps): JSX.Element {
+}: IEventFormProps) {
   const [values, setValues] = useState<IEventFormValues>(EMPTY_VALUES);
   const [saving, setSaving] = useState(false);
 

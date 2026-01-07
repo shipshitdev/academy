@@ -23,7 +23,7 @@ export function CourseForm({
   communities,
   submitLabel,
   onSubmit,
-}: ICourseFormProps): JSX.Element {
+}: ICourseFormProps) {
   const [values, setValues] = useState<ICourseFormValues>(EMPTY_VALUES);
   const [saving, setSaving] = useState(false);
 

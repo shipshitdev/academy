@@ -25,7 +25,7 @@ export function LessonForm({
   courses,
   submitLabel,
   onSubmit,
-}: ILessonFormProps): JSX.Element {
+}: ILessonFormProps) {
   const [values, setValues] = useState<ILessonFormValues>(EMPTY_VALUES);
   const [saving, setSaving] = useState(false);
 

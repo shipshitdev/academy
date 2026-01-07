@@ -31,7 +31,7 @@ function toFormValues(course: Course): ICourseFormValues {
   };
 }
 
-export default function EditCoursePage(): JSX.Element {
+export default function EditCoursePage() {
   const params = useParams();
   const id = params.id as string;
   const [values, setValues] = useState<ICourseFormValues>(DEFAULT_VALUES);

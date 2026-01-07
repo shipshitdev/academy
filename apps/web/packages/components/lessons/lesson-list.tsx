@@ -14,7 +14,7 @@ export function LessonList() {
     try {
       setLoading(true);
       const controller = new AbortController();
-      const data = await LessonService.getAll({ signal: controller.signal });
+      const data = await LessonService.getAdminAll(undefined, { signal: controller.signal });
       setLessons(data);
       setError(null);
     } catch (err) {
@@ -29,7 +29,7 @@ export function LessonList() {
   useEffect(() => {
     const controller = new AbortController();
 
-    LessonService.getAll({ signal: controller.signal })
+    LessonService.getAdminAll(undefined, { signal: controller.signal })
       .then(setLessons)
       .catch((err) => {
         if (err.name !== "AbortError") {
@@ -85,9 +85,6 @@ export function LessonList() {
             <div key={lesson._id} className="p-4 border rounded-lg flex justify-between items-center">
               <div>
                 <h3 className="font-medium">{lesson.title}</h3>
-                {lesson.description && (
-                  <p className="text-sm text-gray-500">{lesson.description}</p>
-                )}
               </div>
               <div className="flex gap-2">
                 <Button

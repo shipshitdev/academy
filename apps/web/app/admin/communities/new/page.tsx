@@ -17,7 +17,7 @@ const DEFAULT_VALUES: ICommunityFormValues = {
   coverImageUrl: "",
 };
 
-export default function NewCommunityPage(): JSX.Element {
+export default function NewCommunityPage() {
   const router = useRouter();
 
   const handleSubmit = async (values: ICommunityFormValues): Promise<void> => {

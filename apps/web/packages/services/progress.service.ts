@@ -1,4 +1,5 @@
 import { Progress } from "@interfaces/progress.interface";
+import type { IRequestOptions } from "@interfaces/request-options.interface";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
@@ -30,11 +31,24 @@ export const ProgressService = {
     return handleResponse<Progress>(response);
   },
 
-  async getMine(): Promise<Progress[]> {
+  async getMine(options?: IRequestOptions): Promise<Progress[]> {
     const headers = await getAuthHeaders();
     const response = await fetch(`${API_URL}/progress/me`, {
       headers,
+      signal: options?.signal,
     });
     return handleResponse<Progress[]>(response);
+  },
+
+  async delete(id: string): Promise<void> {
+    const headers = await getAuthHeaders();
+    const response = await fetch(`${API_URL}/progress/${id}`, {
+      method: "DELETE",
+      headers,
+    });
+    if (!response.ok) {
+      const error = await response.json().catch(() => ({ message: "Delete failed" }));
+      throw new Error(error.message);
+    }
   },
 };

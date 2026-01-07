@@ -17,7 +17,7 @@ const ACTIONS: IToolbarAction[] = [
   { label: "Link", prefix: "[", suffix: "](https://example.com)", placeholder: "link text" },
 ];
 
-export function MarkdownEditor({ value, onChange }: IMarkdownEditorProps): JSX.Element {
+export function MarkdownEditor({ value, onChange }: IMarkdownEditorProps) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
   const preview = useMemo(() => value || "", [value]);
 
