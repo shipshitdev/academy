@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { LessonForm } from "@components/admin/lesson-form";
-import { LessonService } from "@services/lesson.service";
-import { CourseService } from "@services/course.service";
-import type { Lesson } from "@interfaces/lesson.interface";
 import type { Course } from "@interfaces/course.interface";
+import type { Lesson } from "@interfaces/lesson.interface";
 import type { ILessonFormValues } from "@interfaces/lesson-form.interface";
+import { CourseService } from "@services/course.service";
+import { LessonService } from "@services/lesson.service";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const DEFAULT_VALUES: ILessonFormValues = {
   title: "",
@@ -42,7 +42,9 @@ export default function EditLessonPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    CourseService.getAdminAll().then(setCourses).catch(() => setCourses([]));
+    CourseService.getAdminAll()
+      .then(setCourses)
+      .catch(() => setCourses([]));
   }, []);
 
   useEffect(() => {

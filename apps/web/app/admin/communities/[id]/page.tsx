@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { CommunityForm } from "@components/admin/community-form";
-import { CommunityService } from "@services/community.service";
 import type { Community } from "@interfaces/community.interface";
 import type { ICommunityFormValues } from "@interfaces/community-form.interface";
+import { CommunityService } from "@services/community.service";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const DEFAULT_VALUES: ICommunityFormValues = {
   title: "",
@@ -70,11 +70,7 @@ export default function EditCommunityPage() {
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-gray-900">Edit community</h1>
-      <CommunityForm
-        initialValues={values}
-        submitLabel="Save changes"
-        onSubmit={handleSubmit}
-      />
+      <CommunityForm initialValues={values} submitLabel="Save changes" onSubmit={handleSubmit} />
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { Progress } from "@interfaces/progress.interface";
+import type { Progress } from "@interfaces/progress.interface";
 import type { IRequestOptions } from "@interfaces/request-options.interface";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";

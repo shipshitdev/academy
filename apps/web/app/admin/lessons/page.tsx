@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Button } from "@agenticindiedev/ui";
-import { LessonService } from "@services/lesson.service";
 import type { Lesson } from "@interfaces/lesson.interface";
+import { LessonService } from "@services/lesson.service";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function AdminLessonsPage() {
   const [lessons, setLessons] = useState<Lesson[]>([]);
@@ -45,9 +45,7 @@ export default function AdminLessonsPage() {
             className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4"
           >
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">
-                {lesson.title}
-              </h2>
+              <h2 className="text-lg font-semibold text-gray-900">{lesson.title}</h2>
               <p className="text-sm text-gray-500">/{lesson.slug}</p>
             </div>
             <Link

@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { Test, TestingModule } from "@nestjs/testing";
-import { getModelToken } from "@nestjs/mongoose";
-import { NotFoundException } from "@nestjs/common";
-import { CommunitiesService } from "./communities.service";
-import { Community } from "./schemas/community.schema";
+import { NotFoundException } from '@nestjs/common';
+import { getModelToken } from '@nestjs/mongoose';
+import { Test, type TestingModule } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { CommunitiesService } from './communities.service';
+import { Community } from './schemas/community.schema';
 
 const createMockModel = () => ({
   find: vi.fn(),
@@ -13,7 +13,7 @@ const createMockModel = () => ({
   deleteOne: vi.fn(),
 });
 
-describe("CommunitiesService", () => {
+describe('CommunitiesService', () => {
   let service: CommunitiesService;
   let mockModel: ReturnType<typeof createMockModel>;
 
@@ -29,7 +29,7 @@ describe("CommunitiesService", () => {
             ...mockModel,
             new: vi.fn().mockImplementation((data) => ({
               ...data,
-              save: vi.fn().mockResolvedValue({ ...data, _id: "new-id" }),
+              save: vi.fn().mockResolvedValue({ ...data, _id: 'new-id' }),
             })),
           },
         },
@@ -39,12 +39,12 @@ describe("CommunitiesService", () => {
     service = module.get<CommunitiesService>(CommunitiesService);
   });
 
-  it("should be defined", () => {
+  it('should be defined', () => {
     expect(service).toBeDefined();
   });
 
-  it("should list published communities", async () => {
-    const community = { _id: "1", title: "Test", slug: "test" };
+  it('should list published communities', async () => {
+    const community = { _id: '1', title: 'Test', slug: 'test' };
     mockModel.find.mockReturnValue({
       sort: vi.fn().mockResolvedValue([community]),
     });
@@ -55,28 +55,24 @@ describe("CommunitiesService", () => {
     expect(mockModel.find).toHaveBeenCalledWith({ isPublished: true });
   });
 
-  it("should throw when community slug not found", async () => {
+  it('should throw when community slug not found', async () => {
     mockModel.findOne.mockResolvedValue(null);
 
-    await expect(service.findBySlug("missing"))
-      .rejects
-      .toThrow(NotFoundException);
+    await expect(service.findBySlug('missing')).rejects.toThrow(NotFoundException);
   });
 
-  it("should update community", async () => {
-    const updated = { _id: "1", title: "Updated" };
+  it('should update community', async () => {
+    const updated = { _id: '1', title: 'Updated' };
     mockModel.findByIdAndUpdate.mockResolvedValue(updated);
 
-    const result = await service.update("1", { title: "Updated" });
+    const result = await service.update('1', { title: 'Updated' });
 
     expect(result).toEqual(updated);
   });
 
-  it("should throw when removing missing community", async () => {
+  it('should throw when removing missing community', async () => {
     mockModel.deleteOne.mockResolvedValue({ deletedCount: 0 });
 
-    await expect(service.remove("missing"))
-      .rejects
-      .toThrow(NotFoundException);
+    await expect(service.remove('missing')).rejects.toThrow(NotFoundException);
   });
 });

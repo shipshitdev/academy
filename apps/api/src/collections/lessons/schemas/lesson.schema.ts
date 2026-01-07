@@ -1,35 +1,35 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import type { Document } from 'mongoose';
 
 export type LessonDocument = Lesson & Document;
 
 @Schema({ timestamps: true })
 export class Lesson {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   title: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ type: String, required: true, unique: true })
   slug: string;
 
-  @Prop()
+  @Prop({ type: String })
   content?: string;
 
-  @Prop()
+  @Prop({ type: String })
   videoId?: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   courseId: string;
 
-  @Prop({ default: 0 })
+  @Prop({ type: Number, default: 0 })
   sortOrder: number;
 
-  @Prop({ default: false })
+  @Prop({ type: Boolean, default: false })
   isPublished: boolean;
 
-  @Prop({ default: false })
+  @Prop({ type: Boolean, default: false })
   isPreview: boolean;
 
-  @Prop()
+  @Prop({ type: String })
   createdBy?: string;
 }
 

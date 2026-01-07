@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { CourseForm } from "@components/admin/course-form";
-import { CourseService } from "@services/course.service";
-import { CommunityService } from "@services/community.service";
 import type { Community } from "@interfaces/community.interface";
 import type { ICourseFormValues } from "@interfaces/course-form.interface";
+import { CommunityService } from "@services/community.service";
+import { CourseService } from "@services/course.service";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const DEFAULT_VALUES: ICourseFormValues = {
   title: "",
@@ -23,7 +23,9 @@ export default function NewCoursePage() {
   const [communities, setCommunities] = useState<Community[]>([]);
 
   useEffect(() => {
-    CommunityService.getAdminAll().then(setCommunities).catch(() => setCommunities([]));
+    CommunityService.getAdminAll()
+      .then(setCommunities)
+      .catch(() => setCommunities([]));
   }, []);
 
   const handleSubmit = async (values: ICourseFormValues): Promise<void> => {

@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Button } from "@agenticindiedev/ui";
-
-import type {
-  ICourseFormProps,
-  ICourseFormValues,
-} from "@interfaces/course-form.interface";
+import type { ICourseFormProps, ICourseFormValues } from "@interfaces/course-form.interface";
+import { useEffect, useState } from "react";
 
 const EMPTY_VALUES: ICourseFormValues = {
   title: "",
@@ -31,10 +27,7 @@ export function CourseForm({
     setValues({ ...EMPTY_VALUES, ...initialValues });
   }, [initialValues]);
 
-  const handleChange = (
-    field: keyof ICourseFormValues,
-    value: string | number | boolean,
-  ): void => {
+  const handleChange = (field: keyof ICourseFormValues, value: string | number | boolean): void => {
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -100,9 +93,7 @@ export function CourseForm({
             className="w-full rounded-lg border border-gray-200 p-2"
             type="number"
             value={values.sortOrder}
-            onChange={(event) =>
-              handleChange("sortOrder", Number(event.target.value))
-            }
+            onChange={(event) => handleChange("sortOrder", Number(event.target.value))}
           />
         </label>
         <label className="space-y-2 text-sm">

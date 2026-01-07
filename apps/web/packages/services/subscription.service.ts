@@ -1,6 +1,6 @@
-import { Subscription } from "@interfaces/subscription.interface";
 import type { IBillingCheckoutResponse } from "@interfaces/billing.interface";
 import type { IRequestOptions } from "@interfaces/request-options.interface";
+import type { Subscription } from "@interfaces/subscription.interface";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 

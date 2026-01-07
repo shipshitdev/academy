@@ -1,26 +1,26 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import type { Document } from 'mongoose';
 
 export type MembershipDocument = Membership & Document;
 
 @Schema({ timestamps: true })
 export class Membership {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   userId: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   communityId: string;
 
-  @Prop({ default: "active" })
+  @Prop({ type: String, default: 'active' })
   status: string;
 
-  @Prop({ default: "free" })
+  @Prop({ type: String, default: 'free' })
   source: string;
 
-  @Prop({ default: () => new Date() })
+  @Prop({ type: Date, default: () => new Date() })
   joinedAt: Date;
 
-  @Prop()
+  @Prop({ type: Date })
   canceledAt?: Date;
 }
 

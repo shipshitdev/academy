@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Button, Card, CardContent, Skeleton } from "@agenticindiedev/ui";
-import { EventService } from "@services/event.service";
-import { SubscriptionService } from "@services/subscription.service";
 import { useSubscriptionStatus } from "@hooks/use-subscription-status";
 import type { Event } from "@interfaces/event.interface";
+import { EventService } from "@services/event.service";
+import { SubscriptionService } from "@services/subscription.service";
+import { useEffect, useState } from "react";
 
 export default function EventsPage() {
   const { isActive: isSubscribed } = useSubscriptionStatus();
@@ -75,13 +75,9 @@ export default function EventsPage() {
                 <CardContent className="p-6">
                   <div className="flex flex-wrap items-start justify-between gap-3">
                     <div>
-                      <h2 className="text-lg font-semibold text-foreground">
-                        {event.title}
-                      </h2>
+                      <h2 className="text-lg font-semibold text-foreground">{event.title}</h2>
                       {event.description && (
-                        <p className="mt-2 text-sm text-muted-foreground">
-                          {event.description}
-                        </p>
+                        <p className="mt-2 text-sm text-muted-foreground">{event.description}</p>
                       )}
                       <p className="mt-3 text-sm text-muted-foreground">
                         {new Date(event.startsAt).toLocaleString()}

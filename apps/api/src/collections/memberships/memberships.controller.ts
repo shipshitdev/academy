@@ -1,19 +1,19 @@
-import { Body, Controller, Get, Post, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiOperation, ApiTags } from "@nestjs/swagger";
-import { MembershipsService } from "./memberships.service";
-import { CreateMembershipDto } from "./dto/create-membership.dto";
-import { ClerkAuthGuard } from "../../auth/guards/clerk-auth.guard";
-import { CurrentUser, CurrentUserPayload } from "../../auth/decorators/current-user.decorator";
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { CurrentUser, type CurrentUserPayload } from '../../auth/decorators/current-user.decorator';
+import { ClerkAuthGuard } from '../../auth/guards/clerk-auth.guard';
+import type { CreateMembershipDto } from './dto/create-membership.dto';
+import type { MembershipsService } from './memberships.service';
 
-@ApiTags("memberships")
-@Controller("memberships")
+@ApiTags('memberships')
+@Controller('memberships')
 export class MembershipsController {
   constructor(private readonly membershipsService: MembershipsService) {}
 
   @Post()
   @UseGuards(ClerkAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: "Join a free community" })
+  @ApiOperation({ summary: 'Join a free community' })
   create(
     @Body() createMembershipDto: CreateMembershipDto,
     @CurrentUser() user: CurrentUserPayload,
@@ -21,10 +21,10 @@ export class MembershipsController {
     return this.membershipsService.create(createMembershipDto, user.userId);
   }
 
-  @Get("me")
+  @Get('me')
   @UseGuards(ClerkAuthGuard)
   @ApiBearerAuth()
-  @ApiOperation({ summary: "Get memberships for current user" })
+  @ApiOperation({ summary: 'Get memberships for current user' })
   findMine(@CurrentUser() user: CurrentUserPayload) {
     return this.membershipsService.findMine(user.userId);
   }

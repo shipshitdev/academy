@@ -1,13 +1,13 @@
-import { createClerkClient } from "@clerk/backend";
-import { BadRequestException, Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import type { Model } from "mongoose";
-import Stripe from "stripe";
+import { createClerkClient } from '@clerk/backend';
+import { BadRequestException, Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import type { Model } from 'mongoose';
+import Stripe from 'stripe';
 import {
   Subscription,
   type SubscriptionDocument,
-} from "../collections/subscriptions/schemas/subscription.schema";
-import { ConfigService } from "../config/config.service";
+} from '../collections/subscriptions/schemas/subscription.schema';
+import type { ConfigService } from '../config/config.service';
 
 @Injectable()
 export class BillingService {
@@ -18,13 +18,13 @@ export class BillingService {
     private subscriptionModel: Model<SubscriptionDocument>,
     private readonly configService: ConfigService,
   ) {
-    const secretKey = this.configService.get("STRIPE_SECRET_KEY");
+    const secretKey = this.configService.get('STRIPE_SECRET_KEY');
     if (!secretKey) {
-      throw new Error("STRIPE_SECRET_KEY is not set");
+      throw new Error('STRIPE_SECRET_KEY is not set');
     }
 
     this.stripe = new Stripe(secretKey, {
-      apiVersion: "2025-12-15.clover",
+      apiVersion: '2025-12-15.clover',
     });
   }
 
@@ -32,20 +32,20 @@ export class BillingService {
     return this.stripe;
   }
   async createCheckoutSession(userId: string): Promise<Stripe.Checkout.Session> {
-    const priceId = this.configService.getOptional("STRIPE_PRICE_ID");
+    const priceId = this.configService.getOptional('STRIPE_PRICE_ID');
     if (!priceId) {
-      throw new BadRequestException("STRIPE_PRICE_ID is not set");
+      throw new BadRequestException('STRIPE_PRICE_ID is not set');
     }
 
     const appUrl =
-      this.configService.getOptional("APP_URL") ||
-      this.configService.getOptional("NEXT_PUBLIC_APP_URL") ||
-      "http://localhost:3000";
+      this.configService.getOptional('APP_URL') ||
+      this.configService.getOptional('NEXT_PUBLIC_APP_URL') ||
+      'http://localhost:3000';
 
     const customerId = await this.getOrCreateCustomer(userId);
 
     return this.stripe.checkout.sessions.create({
-      mode: "subscription",
+      mode: 'subscription',
       customer: customerId,
       line_items: [{ price: priceId, quantity: 1 }],
       success_url: `${appUrl}/billing/success`,
@@ -77,7 +77,7 @@ export class BillingService {
 
   private async getUserEmail(userId: string): Promise<string | undefined> {
     try {
-      const clerkSecretKey = this.configService.get("CLERK_SECRET_KEY");
+      const clerkSecretKey = this.configService.get('CLERK_SECRET_KEY');
       const clerk = createClerkClient({ secretKey: clerkSecretKey });
       const user = await clerk.users.getUser(userId);
       const primaryEmail = user.emailAddresses.find(

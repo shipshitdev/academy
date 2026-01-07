@@ -1,38 +1,38 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import type { Document } from 'mongoose';
 
 export type CommunityDocument = Community & Document;
 
 @Schema({ timestamps: true })
 export class Community {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   title: string;
 
-  @Prop({ required: true, unique: true })
+  @Prop({ type: String, required: true, unique: true })
   slug: string;
 
-  @Prop()
+  @Prop({ type: String })
   description?: string;
 
-  @Prop({ default: false })
+  @Prop({ type: Boolean, default: false })
   isFree: boolean;
 
-  @Prop()
+  @Prop({ type: Number })
   priceMonthly?: number;
 
-  @Prop({ default: false })
+  @Prop({ type: Boolean, default: false })
   isPublished: boolean;
 
-  @Prop({ default: false })
+  @Prop({ type: Boolean, default: false })
   isFeatured: boolean;
 
-  @Prop({ default: 0 })
+  @Prop({ type: Number, default: 0 })
   sortOrder: number;
 
-  @Prop()
+  @Prop({ type: String })
   coverImageUrl?: string;
 
-  @Prop()
+  @Prop({ type: String })
   createdBy?: string;
 }
 

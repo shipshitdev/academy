@@ -1,7 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import { Card, CardContent } from "@agenticindiedev/ui";
+import Link from "next/link";
 
 const ADMIN_LINKS = [
   { href: "/admin/communities", label: "Communities", icon: "👥" },

@@ -1,9 +1,9 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { Test, TestingModule } from "@nestjs/testing";
-import { getModelToken } from "@nestjs/mongoose";
-import { NotFoundException } from "@nestjs/common";
-import { CoursesService } from "./courses.service";
-import { Course } from "./schemas/course.schema";
+import { NotFoundException } from '@nestjs/common';
+import { getModelToken } from '@nestjs/mongoose';
+import { Test, type TestingModule } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { CoursesService } from './courses.service';
+import { Course } from './schemas/course.schema';
 
 const createMockModel = () => ({
   find: vi.fn(),
@@ -13,7 +13,7 @@ const createMockModel = () => ({
   deleteOne: vi.fn(),
 });
 
-describe("CoursesService", () => {
+describe('CoursesService', () => {
   let service: CoursesService;
   let mockModel: ReturnType<typeof createMockModel>;
 
@@ -29,7 +29,7 @@ describe("CoursesService", () => {
             ...mockModel,
             new: vi.fn().mockImplementation((data) => ({
               ...data,
-              save: vi.fn().mockResolvedValue({ ...data, _id: "new-id" }),
+              save: vi.fn().mockResolvedValue({ ...data, _id: 'new-id' }),
             })),
           },
         },
@@ -39,8 +39,8 @@ describe("CoursesService", () => {
     service = module.get<CoursesService>(CoursesService);
   });
 
-  it("should list published courses", async () => {
-    const course = { _id: "1", title: "Course", slug: "course" };
+  it('should list published courses', async () => {
+    const course = { _id: '1', title: 'Course', slug: 'course' };
     mockModel.find.mockReturnValue({
       sort: vi.fn().mockResolvedValue([course]),
     });
@@ -51,19 +51,15 @@ describe("CoursesService", () => {
     expect(mockModel.find).toHaveBeenCalledWith({ isPublished: true });
   });
 
-  it("should throw when course slug not found", async () => {
+  it('should throw when course slug not found', async () => {
     mockModel.findOne.mockResolvedValue(null);
 
-    await expect(service.findBySlug("missing"))
-      .rejects
-      .toThrow(NotFoundException);
+    await expect(service.findBySlug('missing')).rejects.toThrow(NotFoundException);
   });
 
-  it("should throw when removing missing course", async () => {
+  it('should throw when removing missing course', async () => {
     mockModel.deleteOne.mockResolvedValue({ deletedCount: 0 });
 
-    await expect(service.remove("missing"))
-      .rejects
-      .toThrow(NotFoundException);
+    await expect(service.remove('missing')).rejects.toThrow(NotFoundException);
   });
 });

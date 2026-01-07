@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { CourseService } from "@services/course.service";
 import type { Course } from "@interfaces/course.interface";
+import { CourseService } from "@services/course.service";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function CoursesPage() {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -47,13 +47,9 @@ export default function CoursesPage() {
             href={`/courses/${course.slug}`}
             className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
           >
-            <h2 className="text-lg font-semibold text-gray-900">
-              {course.title}
-            </h2>
+            <h2 className="text-lg font-semibold text-gray-900">{course.title}</h2>
             {course.description && (
-              <p className="mt-2 text-sm text-gray-600">
-                {course.description}
-              </p>
+              <p className="mt-2 text-sm text-gray-600">{course.description}</p>
             )}
           </Link>
         ))}

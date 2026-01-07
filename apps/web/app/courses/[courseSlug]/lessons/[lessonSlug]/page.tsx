@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
-import { LessonService } from "@services/lesson.service";
-import { SubscriptionService } from "@services/subscription.service";
-import { ProgressService } from "@services/progress.service";
-import { MarkdownRenderer } from "@components/markdown/markdown-renderer";
 import { CommentList } from "@components/comments";
+import { MarkdownRenderer } from "@components/markdown/markdown-renderer";
 import type { Lesson } from "@interfaces/lesson.interface";
+import { LessonService } from "@services/lesson.service";
+import { ProgressService } from "@services/progress.service";
+import { SubscriptionService } from "@services/subscription.service";
+import { ArrowLeft } from "lucide-react";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function LessonPage() {
   const params = useParams();

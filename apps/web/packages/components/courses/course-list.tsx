@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { CourseService } from "@services/course.service";
-import { Course } from "@interfaces/course.interface";
 import { Button } from "@agenticindiedev/ui";
+import type { Course } from "@interfaces/course.interface";
+import { CourseService } from "@services/course.service";
+import { useEffect, useState } from "react";
 
 export function CourseList() {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -59,30 +59,31 @@ export function CourseList() {
   }
 
   if (error) {
-    return (
-      <div className="p-4 bg-red-50 text-red-600 rounded-lg">
-        Error: {error}
-      </div>
-    );
+    return <div className="p-4 bg-red-50 text-red-600 rounded-lg">Error: {error}</div>;
   }
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Courses</h2>
-        <Button onClick={() => window.location.href = "/courses/new"}>
+        <Button
+          onClick={() => {
+            window.location.href = "/courses/new";
+          }}
+        >
           Add Course
         </Button>
       </div>
 
       {courses.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          No courses yet. Create your first one!
-        </div>
+        <div className="text-center py-8 text-gray-500">No courses yet. Create your first one!</div>
       ) : (
         <div className="space-y-2">
           {courses.map((course) => (
-            <div key={course._id} className="p-4 border rounded-lg flex justify-between items-center">
+            <div
+              key={course._id}
+              className="p-4 border rounded-lg flex justify-between items-center"
+            >
               <div>
                 <h3 className="font-medium">{course.title}</h3>
                 {course.description && (
@@ -92,14 +93,13 @@ export function CourseList() {
               <div className="flex gap-2">
                 <Button
                   variant="ghost"
-                  onClick={() => window.location.href = `/courses/${course._id}`}
+                  onClick={() => {
+                    window.location.href = `/courses/${course._id}`;
+                  }}
                 >
                   Edit
                 </Button>
-                <Button
-                  variant="ghost"
-                  onClick={() => handleDelete(course._id)}
-                >
+                <Button variant="ghost" onClick={() => handleDelete(course._id)}>
                   Delete
                 </Button>
               </div>

@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Button } from "@agenticindiedev/ui";
-import { CourseService } from "@services/course.service";
 import type { Course } from "@interfaces/course.interface";
+import { CourseService } from "@services/course.service";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function AdminCoursesPage() {
   const [courses, setCourses] = useState<Course[]>([]);
@@ -45,9 +45,7 @@ export default function AdminCoursesPage() {
             className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4"
           >
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">
-                {course.title}
-              </h2>
+              <h2 className="text-lg font-semibold text-gray-900">{course.title}</h2>
               <p className="text-sm text-gray-500">/{course.slug}</p>
             </div>
             <Link

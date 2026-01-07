@@ -1,18 +1,18 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
-import { useAuth } from "@clerk/nextjs";
 import { Button } from "@agenticindiedev/ui";
-import { CommunityService } from "@services/community.service";
-import { CourseService } from "@services/course.service";
-import { MembershipService } from "@services/membership.service";
-import { SubscriptionService } from "@services/subscription.service";
+import { useAuth } from "@clerk/nextjs";
 import { useSubscriptionStatus } from "@hooks/use-subscription-status";
 import type { Community } from "@interfaces/community.interface";
 import type { Course } from "@interfaces/course.interface";
 import type { Membership } from "@interfaces/membership.interface";
+import { CommunityService } from "@services/community.service";
+import { CourseService } from "@services/course.service";
+import { MembershipService } from "@services/membership.service";
+import { SubscriptionService } from "@services/subscription.service";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useEffect, useMemo, useState } from "react";
 
 export default function CommunityDetailPage() {
   const params = useParams();
@@ -27,7 +27,7 @@ export default function CommunityDetailPage() {
 
   const joinedIds = useMemo(
     () => new Set(memberships.map((membership) => membership.communityId)),
-    [memberships],
+    [memberships]
   );
 
   useEffect(() => {
@@ -130,9 +130,7 @@ export default function CommunityDetailPage() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         <div>
           <h1 className="text-3xl font-bold text-gray-900">{community.title}</h1>
-          {community.description && (
-            <p className="mt-2 text-gray-600">{community.description}</p>
-          )}
+          {community.description && <p className="mt-2 text-gray-600">{community.description}</p>}
         </div>
         <div className="flex items-center gap-3">
           <span className="rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
@@ -162,13 +160,9 @@ export default function CommunityDetailPage() {
                 href={`/courses/${course.slug}`}
                 className="rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
               >
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {course.title}
-                </h3>
+                <h3 className="text-lg font-semibold text-gray-900">{course.title}</h3>
                 {course.description && (
-                  <p className="mt-2 text-sm text-gray-600">
-                    {course.description}
-                  </p>
+                  <p className="mt-2 text-sm text-gray-600">{course.description}</p>
                 )}
               </Link>
             ))

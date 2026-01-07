@@ -1,9 +1,9 @@
 "use client";
 
-import type { Comment } from "@interfaces/comment.interface";
 import { useAuth } from "@clerk/nextjs";
-import { Trash2, User } from "lucide-react";
+import type { Comment } from "@interfaces/comment.interface";
 import { formatDistanceToNow } from "date-fns";
+import { Trash2, User } from "lucide-react";
 
 interface CommentItemProps {
   comment: Comment;
@@ -21,6 +21,7 @@ export function CommentItem({ comment, onDelete, isDeleting }: CommentItemProps)
     <div className="flex gap-3 rounded-lg border border-border bg-card p-4">
       <div className="flex-shrink-0">
         {comment.userAvatar ? (
+          // biome-ignore lint/performance/noImgElement: External avatar URLs from auth providers
           <img
             src={comment.userAvatar}
             alt={comment.userName}

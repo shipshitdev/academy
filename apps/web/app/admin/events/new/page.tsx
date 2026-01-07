@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { EventForm } from "@components/admin/event-form";
-import { EventService } from "@services/event.service";
-import { CommunityService } from "@services/community.service";
 import type { Community } from "@interfaces/community.interface";
 import type { Event } from "@interfaces/event.interface";
 import type { IEventFormValues } from "@interfaces/event-form.interface";
+import { CommunityService } from "@services/community.service";
+import { EventService } from "@services/event.service";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const DEFAULT_VALUES: IEventFormValues = {
   title: "",
@@ -33,7 +33,9 @@ export default function NewEventPage() {
   const [communities, setCommunities] = useState<Community[]>([]);
 
   useEffect(() => {
-    CommunityService.getAdminAll().then(setCommunities).catch(() => setCommunities([]));
+    CommunityService.getAdminAll()
+      .then(setCommunities)
+      .catch(() => setCommunities([]));
   }, []);
 
   const handleSubmit = async (values: IEventFormValues): Promise<void> => {

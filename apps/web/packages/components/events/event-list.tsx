@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { EventService } from "@services/event.service";
-import { Event } from "@interfaces/event.interface";
 import { Button } from "@agenticindiedev/ui";
+import type { Event } from "@interfaces/event.interface";
+import { EventService } from "@services/event.service";
+import { useEffect, useState } from "react";
 
 export function EventList() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -59,47 +59,45 @@ export function EventList() {
   }
 
   if (error) {
-    return (
-      <div className="p-4 bg-red-50 text-red-600 rounded-lg">
-        Error: {error}
-      </div>
-    );
+    return <div className="p-4 bg-red-50 text-red-600 rounded-lg">Error: {error}</div>;
   }
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Events</h2>
-        <Button onClick={() => window.location.href = "/events/new"}>
+        <Button
+          onClick={() => {
+            window.location.href = "/events/new";
+          }}
+        >
           Add Event
         </Button>
       </div>
 
       {events.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          No events yet. Create your first one!
-        </div>
+        <div className="text-center py-8 text-gray-500">No events yet. Create your first one!</div>
       ) : (
         <div className="space-y-2">
           {events.map((event) => (
-            <div key={event._id} className="p-4 border rounded-lg flex justify-between items-center">
+            <div
+              key={event._id}
+              className="p-4 border rounded-lg flex justify-between items-center"
+            >
               <div>
                 <h3 className="font-medium">{event.title}</h3>
-                {event.description && (
-                  <p className="text-sm text-gray-500">{event.description}</p>
-                )}
+                {event.description && <p className="text-sm text-gray-500">{event.description}</p>}
               </div>
               <div className="flex gap-2">
                 <Button
                   variant="ghost"
-                  onClick={() => window.location.href = `/events/${event._id}`}
+                  onClick={() => {
+                    window.location.href = `/events/${event._id}`;
+                  }}
                 >
                   Edit
                 </Button>
-                <Button
-                  variant="ghost"
-                  onClick={() => handleDelete(event._id)}
-                >
+                <Button variant="ghost" onClick={() => handleDelete(event._id)}>
                   Delete
                 </Button>
               </div>

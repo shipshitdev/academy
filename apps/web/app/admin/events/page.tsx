@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Button } from "@agenticindiedev/ui";
-import { EventService } from "@services/event.service";
 import type { Event } from "@interfaces/event.interface";
+import { EventService } from "@services/event.service";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function AdminEventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -45,12 +45,8 @@ export default function AdminEventsPage() {
             className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4"
           >
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">
-                {event.title}
-              </h2>
-              <p className="text-sm text-gray-500">
-                {new Date(event.startsAt).toLocaleString()}
-              </p>
+              <h2 className="text-lg font-semibold text-gray-900">{event.title}</h2>
+              <p className="text-sm text-gray-500">{new Date(event.startsAt).toLocaleString()}</p>
             </div>
             <Link
               href={`/admin/events/${event._id}`}

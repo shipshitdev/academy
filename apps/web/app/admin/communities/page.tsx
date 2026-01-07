@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
 import { Button } from "@agenticindiedev/ui";
-import { CommunityService } from "@services/community.service";
 import type { Community } from "@interfaces/community.interface";
+import { CommunityService } from "@services/community.service";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function AdminCommunitiesPage() {
   const [communities, setCommunities] = useState<Community[]>([]);
@@ -45,9 +45,7 @@ export default function AdminCommunitiesPage() {
             className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4"
           >
             <div>
-              <h2 className="text-lg font-semibold text-gray-900">
-                {community.title}
-              </h2>
+              <h2 className="text-lg font-semibold text-gray-900">{community.title}</h2>
               <p className="text-sm text-gray-500">/{community.slug}</p>
             </div>
             <Link

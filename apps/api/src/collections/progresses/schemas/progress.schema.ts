@@ -1,17 +1,17 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import type { Document } from 'mongoose';
 
 export type ProgressDocument = Progress & Document;
 
 @Schema({ timestamps: true })
 export class Progress {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   userId: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   lessonId: string;
 
-  @Prop()
+  @Prop({ type: Date })
   completedAt?: Date;
 }
 

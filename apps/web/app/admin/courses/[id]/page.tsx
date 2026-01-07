@@ -1,13 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
 import { CourseForm } from "@components/admin/course-form";
-import { CourseService } from "@services/course.service";
-import { CommunityService } from "@services/community.service";
-import type { Course } from "@interfaces/course.interface";
 import type { Community } from "@interfaces/community.interface";
+import type { Course } from "@interfaces/course.interface";
 import type { ICourseFormValues } from "@interfaces/course-form.interface";
+import { CommunityService } from "@services/community.service";
+import { CourseService } from "@services/course.service";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const DEFAULT_VALUES: ICourseFormValues = {
   title: "",
@@ -40,7 +40,9 @@ export default function EditCoursePage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    CommunityService.getAdminAll().then(setCommunities).catch(() => setCommunities([]));
+    CommunityService.getAdminAll()
+      .then(setCommunities)
+      .catch(() => setCommunities([]));
   }, []);
 
   useEffect(() => {

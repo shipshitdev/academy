@@ -1,9 +1,9 @@
-import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
-import { EventsController } from "./events.controller";
-import { EventsService } from "./events.service";
-import { Event, EventSchema } from "./schemas/event.schema";
-import { Subscription, SubscriptionSchema } from "../subscriptions/schemas/subscription.schema";
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Subscription, SubscriptionSchema } from '../subscriptions/schemas/subscription.schema';
+import { EventsController } from './events.controller';
+import { EventsService } from './events.service';
+import { Event, EventSchema } from './schemas/event.schema';
 
 @Module({
   imports: [

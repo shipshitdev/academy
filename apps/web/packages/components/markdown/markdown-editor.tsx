@@ -1,13 +1,9 @@
 "use client";
 
-import { useMemo, useRef } from "react";
 import { Button } from "@agenticindiedev/ui";
+import type { IMarkdownEditorProps, IToolbarAction } from "@interfaces/markdown-editor.interface";
+import { useMemo, useRef } from "react";
 import { MarkdownRenderer } from "./markdown-renderer";
-
-import type {
-  IMarkdownEditorProps,
-  IToolbarAction,
-} from "@interfaces/markdown-editor.interface";
 
 const ACTIONS: IToolbarAction[] = [
   { label: "H2", prefix: "## ", suffix: "", placeholder: "Heading" },
@@ -31,11 +27,7 @@ export function MarkdownEditor({ value, onChange }: IMarkdownEditorProps) {
     const end = textarea.selectionEnd;
     const selected = value.slice(start, end) || action.placeholder;
     const nextValue =
-      value.slice(0, start) +
-      action.prefix +
-      selected +
-      action.suffix +
-      value.slice(end);
+      value.slice(0, start) + action.prefix + selected + action.suffix + value.slice(end);
 
     onChange(nextValue);
 
@@ -50,11 +42,7 @@ export function MarkdownEditor({ value, onChange }: IMarkdownEditorProps) {
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
         {ACTIONS.map((action) => (
-          <Button
-            key={action.label}
-            variant="ghost"
-            onClick={() => applyAction(action)}
-          >
+          <Button key={action.label} variant="ghost" onClick={() => applyAction(action)}>
             {action.label}
           </Button>
         ))}

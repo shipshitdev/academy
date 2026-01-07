@@ -1,26 +1,26 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import type { Document } from 'mongoose';
 
 export type CommentDocument = Comment & Document;
 
 @Schema({ timestamps: true })
 export class Comment {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   lessonId: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   userId: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   userName: string;
 
-  @Prop()
+  @Prop({ type: String })
   userAvatar?: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   content: string;
 
-  @Prop()
+  @Prop({ type: String })
   parentId?: string;
 }
 

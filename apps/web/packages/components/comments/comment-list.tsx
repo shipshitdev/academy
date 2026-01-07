@@ -3,7 +3,7 @@
 import type { Comment } from "@interfaces/comment.interface";
 import { CommentService } from "@services/comment.service";
 import { MessageCircle } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { CommentForm } from "./comment-form";
 import { CommentItem } from "./comment-item";
 
@@ -18,11 +18,7 @@ export function CommentList({ lessonId }: CommentListProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
-  useEffect(() => {
-    loadComments();
-  }, [lessonId]);
-
-  const loadComments = async () => {
+  const loadComments = useCallback(async () => {
     try {
       setLoading(true);
       setError(null);
@@ -33,7 +29,11 @@ export function CommentList({ lessonId }: CommentListProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, [lessonId]);
+
+  useEffect(() => {
+    loadComments();
+  }, [loadComments]);
 
   const handleSubmit = async (content: string) => {
     try {
@@ -63,9 +63,7 @@ export function CommentList({ lessonId }: CommentListProps) {
     <div className="space-y-6">
       <div className="flex items-center gap-2">
         <MessageCircle className="h-5 w-5 text-primary" />
-        <h2 className="text-lg font-semibold text-foreground">
-          Discussion ({comments.length})
-        </h2>
+        <h2 className="text-lg font-semibold text-foreground">Discussion ({comments.length})</h2>
       </div>
 
       <CommentForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />

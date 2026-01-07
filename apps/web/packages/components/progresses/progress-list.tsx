@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { ProgressService } from "@services/progress.service";
-import { Progress } from "@interfaces/progress.interface";
 import { Button } from "@agenticindiedev/ui";
+import type { Progress } from "@interfaces/progress.interface";
+import { ProgressService } from "@services/progress.service";
+import { useEffect, useState } from "react";
 
 export function ProgressList() {
   const [progresses, setProgresses] = useState<Progress[]>([]);
@@ -59,11 +59,7 @@ export function ProgressList() {
   }
 
   if (error) {
-    return (
-      <div className="p-4 bg-red-50 text-red-600 rounded-lg">
-        Error: {error}
-      </div>
-    );
+    return <div className="p-4 bg-red-50 text-red-600 rounded-lg">Error: {error}</div>;
   }
 
   return (
@@ -73,24 +69,24 @@ export function ProgressList() {
       </div>
 
       {progresses.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          No progress yet. Start learning!
-        </div>
+        <div className="text-center py-8 text-gray-500">No progress yet. Start learning!</div>
       ) : (
         <div className="space-y-2">
           {progresses.map((progress) => (
-            <div key={progress._id} className="p-4 border rounded-lg flex justify-between items-center">
+            <div
+              key={progress._id}
+              className="p-4 border rounded-lg flex justify-between items-center"
+            >
               <div>
                 <h3 className="font-medium">Lesson: {progress.lessonId}</h3>
                 {progress.completedAt && (
-                  <p className="text-sm text-gray-500">Completed: {new Date(progress.completedAt).toLocaleDateString()}</p>
+                  <p className="text-sm text-gray-500">
+                    Completed: {new Date(progress.completedAt).toLocaleDateString()}
+                  </p>
                 )}
               </div>
               <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  onClick={() => handleDelete(progress._id)}
-                >
+                <Button variant="ghost" onClick={() => handleDelete(progress._id)}>
                   Remove
                 </Button>
               </div>

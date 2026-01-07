@@ -1,26 +1,26 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import type { Document } from 'mongoose';
 
 export type SubscriptionDocument = Subscription & Document;
 
 @Schema({ timestamps: true })
 export class Subscription {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   userId: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   stripeCustomerId: string;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   stripeSubscriptionId: string;
 
-  @Prop({ default: "active" })
+  @Prop({ type: String, default: 'active' })
   status: string;
 
-  @Prop()
+  @Prop({ type: Date })
   currentPeriodEnd?: Date;
 
-  @Prop({ default: false })
+  @Prop({ type: Boolean, default: false })
   cancelAtPeriodEnd?: boolean;
 }
 

@@ -1,4 +1,4 @@
-import { Community } from "@interfaces/community.interface";
+import type { Community } from "@interfaces/community.interface";
 import type { IRequestOptions } from "@interfaces/request-options.interface";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";

@@ -1,9 +1,9 @@
-import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
-import { MembershipsController } from "./memberships.controller";
-import { MembershipsService } from "./memberships.service";
-import { Membership, MembershipSchema } from "./schemas/membership.schema";
-import { Community, CommunitySchema } from "../communities/schemas/community.schema";
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Community, CommunitySchema } from '../communities/schemas/community.schema';
+import { MembershipsController } from './memberships.controller';
+import { MembershipsService } from './memberships.service';
+import { Membership, MembershipSchema } from './schemas/membership.schema';
 
 @Module({
   imports: [

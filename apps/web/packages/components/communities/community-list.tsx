@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { CommunityService } from "@services/community.service";
-import { Community } from "@interfaces/community.interface";
 import { Button } from "@agenticindiedev/ui";
+import type { Community } from "@interfaces/community.interface";
+import { CommunityService } from "@services/community.service";
+import { useEffect, useState } from "react";
 
 export function CommunityList() {
   const [communities, setCommunitys] = useState<Community[]>([]);
@@ -59,18 +59,18 @@ export function CommunityList() {
   }
 
   if (error) {
-    return (
-      <div className="p-4 bg-red-50 text-red-600 rounded-lg">
-        Error: {error}
-      </div>
-    );
+    return <div className="p-4 bg-red-50 text-red-600 rounded-lg">Error: {error}</div>;
   }
 
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Communitys</h2>
-        <Button onClick={() => window.location.href = "/communities/new"}>
+        <Button
+          onClick={() => {
+            window.location.href = "/communities/new";
+          }}
+        >
           Add Community
         </Button>
       </div>
@@ -82,7 +82,10 @@ export function CommunityList() {
       ) : (
         <div className="space-y-2">
           {communities.map((community) => (
-            <div key={community._id} className="p-4 border rounded-lg flex justify-between items-center">
+            <div
+              key={community._id}
+              className="p-4 border rounded-lg flex justify-between items-center"
+            >
               <div>
                 <h3 className="font-medium">{community.title}</h3>
                 {community.description && (
@@ -92,14 +95,13 @@ export function CommunityList() {
               <div className="flex gap-2">
                 <Button
                   variant="ghost"
-                  onClick={() => window.location.href = `/communities/${community._id}`}
+                  onClick={() => {
+                    window.location.href = `/communities/${community._id}`;
+                  }}
                 >
                   Edit
                 </Button>
-                <Button
-                  variant="ghost"
-                  onClick={() => handleDelete(community._id)}
-                >
+                <Button variant="ghost" onClick={() => handleDelete(community._id)}>
                   Delete
                 </Button>
               </div>

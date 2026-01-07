@@ -66,14 +66,12 @@ const STEPS = [
   {
     number: "01",
     title: "Start with Building",
-    description:
-      "Begin with vibe coding. Ship your first app with AI. No experience needed.",
+    description: "Begin with vibe coding. Ship your first app with AI. No experience needed.",
   },
   {
     number: "02",
     title: "Learn to Monetize",
-    description:
-      "Apply your skills to ecommerce. Launch products that generate real revenue.",
+    description: "Apply your skills to ecommerce. Launch products that generate real revenue.",
   },
   {
     number: "03",
@@ -83,7 +81,8 @@ const STEPS = [
   {
     number: "04",
     title: "Combine & Repeat",
-    description: "Stack the skills. Build apps, sell products, and distribute content. Rinse and repeat.",
+    description:
+      "Stack the skills. Build apps, sell products, and distribute content. Rinse and repeat.",
   },
 ];
 
@@ -105,7 +104,10 @@ function HeroSection() {
 
         {/* Animated accent lines */}
         <div className="absolute left-0 top-1/4 h-px w-1/3 animate-pulse bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-        <div className="absolute right-0 top-2/3 h-px w-1/4 animate-pulse bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" style={{ animationDelay: '1s' }} />
+        <div
+          className="absolute right-0 top-2/3 h-px w-1/4 animate-pulse bg-gradient-to-r from-transparent via-violet-500/30 to-transparent"
+          style={{ animationDelay: "1s" }}
+        />
 
         {/* Corner accents */}
         <div className="absolute left-0 top-0 h-32 w-32 bg-gradient-to-br from-primary/10 to-transparent" />
@@ -117,15 +119,19 @@ function HeroSection() {
           Build profitable businesses{" "}
           <span
             className="bg-gradient-to-r from-primary via-violet-400 to-primary"
-            style={{ WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
+            style={{
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              backgroundClip: "text",
+            }}
           >
             with AI
           </span>
         </h1>
 
         <p className="animate-fade-in-up delay-100 mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground sm:text-xl">
-          Learn to build e-commerce stores, ship AI-powered apps, and create content that
-          scales. No coding experience required. Join a community of builders shipping real projects.
+          Learn to build e-commerce stores, ship AI-powered apps, and create content that scales. No
+          coding experience required. Join a community of builders shipping real projects.
         </p>
 
         <div className="animate-fade-in-up delay-200 mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -227,18 +233,25 @@ function FeaturesSection() {
           <h2 className="text-3xl font-bold text-foreground sm:text-4xl">
             <span className="relative inline-block">
               <span className="relative z-10">Your journey</span>
-              <span className="absolute -bottom-1 left-0 h-3 w-full -skew-x-12 bg-violet-600/50" aria-hidden="true" />
+              <span
+                className="absolute -bottom-1 left-0 h-3 w-full -skew-x-12 bg-violet-600/50"
+                aria-hidden="true"
+              />
             </span>{" "}
             from zero to income
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            A clear path: first you build, then you sell, then you scale. Each step unlocks the next.
+            A clear path: first you build, then you sell, then you scale. Each step unlocks the
+            next.
           </p>
         </div>
 
         <div className="relative mt-16">
           {/* Connecting line above the cards */}
-          <div className="absolute left-1/2 -top-4 hidden h-0.5 w-[60%] -translate-x-1/2 bg-gradient-to-r from-violet-600/30 via-amber-500/30 to-emerald-500/30 md:block" aria-hidden="true" />
+          <div
+            className="absolute left-1/2 -top-4 hidden h-0.5 w-[60%] -translate-x-1/2 bg-gradient-to-r from-violet-600/30 via-amber-500/30 to-emerald-500/30 md:block"
+            aria-hidden="true"
+          />
 
           <div className="grid gap-8 md:grid-cols-3">
             {JOURNEY_STEPS.map((step, idx) => {
@@ -253,20 +266,31 @@ function FeaturesSection() {
                 >
                   <CardContent className="pt-6">
                     <div className="mb-4 flex items-center justify-between">
-                      <div className={`inline-flex h-14 w-14 items-center justify-center rounded-xl ${colors.bg} transition-transform duration-300 group-hover:scale-110`}>
-                        <step.icon className={`h-7 w-7 ${colors.text} transition-transform duration-300 group-hover:rotate-6`} />
+                      <div
+                        className={`inline-flex h-14 w-14 items-center justify-center rounded-xl ${colors.bg} transition-transform duration-300 group-hover:scale-110`}
+                      >
+                        <step.icon
+                          className={`h-7 w-7 ${colors.text} transition-transform duration-300 group-hover:rotate-6`}
+                        />
                       </div>
-                      <span className={`text-xs font-bold uppercase tracking-widest ${colors.text}`}>
+                      <span
+                        className={`text-xs font-bold uppercase tracking-widest ${colors.text}`}
+                      >
                         {step.step}
                       </span>
                     </div>
                     <h3 className="text-xl font-semibold text-foreground">
                       <span className="relative inline-block">
                         <span className="relative z-10">{step.title}</span>
-                        <span className={`absolute -bottom-0.5 left-0 h-2 w-full -skew-x-12 ${colors.highlight} opacity-0 transition-all duration-300 group-hover:opacity-100`} aria-hidden="true" />
+                        <span
+                          className={`absolute -bottom-0.5 left-0 h-2 w-full -skew-x-12 ${colors.highlight} opacity-0 transition-all duration-300 group-hover:opacity-100`}
+                          aria-hidden="true"
+                        />
                       </span>
                     </h3>
-                    <p className="mt-1 text-sm font-medium text-muted-foreground/80">{step.subtitle}</p>
+                    <p className="mt-1 text-sm font-medium text-muted-foreground/80">
+                      {step.subtitle}
+                    </p>
                     <p className="mt-3 leading-relaxed text-muted-foreground">{step.description}</p>
                   </CardContent>
                 </Card>
@@ -335,7 +359,11 @@ function CommunityCard({
   const price = community.priceMonthly || 49;
 
   return (
-    <Card variant="outline" hover className="group flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5">
+    <Card
+      variant="outline"
+      hover
+      className="group flex flex-col overflow-hidden transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-primary/5"
+    >
       {/* Cover image placeholder */}
       <div className="relative h-48 overflow-hidden bg-muted">
         {community.coverImageUrl ? (
@@ -359,7 +387,9 @@ function CommunityCard({
       </div>
 
       <CardHeader>
-        <h3 className="text-xl font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">{community.title}</h3>
+        <h3 className="text-xl font-semibold text-foreground transition-colors duration-300 group-hover:text-primary">
+          {community.title}
+        </h3>
       </CardHeader>
 
       <CardContent className="flex-1">

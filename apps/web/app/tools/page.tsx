@@ -193,7 +193,9 @@ function ToolCard({ tool }: { tool: Tool }) {
       className="group relative flex flex-col rounded-xl border border-border bg-card p-6 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5"
     >
       {tool.tag && (
-        <span className={`absolute right-4 top-4 rounded-full px-2.5 py-0.5 text-xs font-medium ${tool.tagColor}`}>
+        <span
+          className={`absolute right-4 top-4 rounded-full px-2.5 py-0.5 text-xs font-medium ${tool.tagColor}`}
+        >
           {tool.tag}
         </span>
       )}
@@ -238,8 +240,8 @@ export default function ToolsPage() {
             <span className="text-primary">.</span>
           </h1>
           <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            These are the exact tools we use in our courses and for our own businesses.
-            Some links are affiliate links that help support the platform at no extra cost to you.
+            These are the exact tools we use in our courses and for our own businesses. Some links
+            are affiliate links that help support the platform at no extra cost to you.
           </p>
         </div>
       </section>
@@ -278,7 +280,9 @@ export default function ToolsPage() {
           >
             <div className="mx-auto max-w-6xl px-6">
               <div className="mb-10 flex items-center gap-3">
-                <div className={`inline-flex h-10 w-10 items-center justify-center rounded-lg ${category.bgColor}`}>
+                <div
+                  className={`inline-flex h-10 w-10 items-center justify-center rounded-lg ${category.bgColor}`}
+                >
                   <Icon className={`h-5 w-5 ${category.color}`} />
                 </div>
                 <h2 className="text-2xl font-bold text-foreground">{category.name}</h2>
@@ -309,7 +313,8 @@ export default function ToolsPage() {
             ?
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-lg text-muted-foreground">
-            Learn how to use these tools effectively in our courses. Build real projects and start earning.
+            Learn how to use these tools effectively in our courses. Build real projects and start
+            earning.
           </p>
           <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
             <Link

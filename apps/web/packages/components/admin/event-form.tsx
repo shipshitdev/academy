@@ -1,12 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Button } from "@agenticindiedev/ui";
-
-import type {
-  IEventFormProps,
-  IEventFormValues,
-} from "@interfaces/event-form.interface";
+import type { IEventFormProps, IEventFormValues } from "@interfaces/event-form.interface";
+import { useEffect, useState } from "react";
 
 const EMPTY_VALUES: IEventFormValues = {
   title: "",
@@ -19,12 +15,7 @@ const EMPTY_VALUES: IEventFormValues = {
   isPublished: false,
 };
 
-export function EventForm({
-  initialValues,
-  communities,
-  submitLabel,
-  onSubmit,
-}: IEventFormProps) {
+export function EventForm({ initialValues, communities, submitLabel, onSubmit }: IEventFormProps) {
   const [values, setValues] = useState<IEventFormValues>(EMPTY_VALUES);
   const [saving, setSaving] = useState(false);
 
@@ -32,10 +23,7 @@ export function EventForm({
     setValues({ ...EMPTY_VALUES, ...initialValues });
   }, [initialValues]);
 
-  const handleChange = (
-    field: keyof IEventFormValues,
-    value: string | boolean,
-  ): void => {
+  const handleChange = (field: keyof IEventFormValues, value: string | boolean): void => {
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 

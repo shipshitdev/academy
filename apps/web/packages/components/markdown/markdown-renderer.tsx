@@ -1,7 +1,6 @@
+import type { IMarkdownRendererProps } from "@interfaces/markdown-renderer.interface";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-
-import type { IMarkdownRendererProps } from "@interfaces/markdown-renderer.interface";
 
 export function MarkdownRenderer({ content }: IMarkdownRendererProps) {
   return (

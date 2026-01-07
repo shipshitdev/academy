@@ -1,37 +1,32 @@
-import { Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import type { Model } from "mongoose";
-import type { CreateSubscriptionDto } from "./dto/create-subscription.dto";
-import {
-  Subscription,
-  type SubscriptionDocument,
-} from "./schemas/subscription.schema";
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import type { Model } from 'mongoose';
+import type { CreateSubscriptionDto } from './dto/create-subscription.dto';
+import { Subscription, type SubscriptionDocument } from './schemas/subscription.schema';
 
 @Injectable()
 export class SubscriptionsService {
-	constructor(
+  constructor(
     @InjectModel(Subscription.name)
     private subscriptionModel: Model<SubscriptionDocument>,
   ) {}
 
-	async upsertFromStripe(
-		payload: CreateSubscriptionDto,
-	): Promise<Subscription> {
-		return this.subscriptionModel.findOneAndUpdate(
-			{ stripeSubscriptionId: payload.stripeSubscriptionId },
-			{
-				...payload,
-				status: payload.status || "active",
-			},
-			{ new: true, upsert: true },
-		);
-	}
+  async upsertFromStripe(payload: CreateSubscriptionDto): Promise<Subscription> {
+    return this.subscriptionModel.findOneAndUpdate(
+      { stripeSubscriptionId: payload.stripeSubscriptionId },
+      {
+        ...payload,
+        status: payload.status || 'active',
+      },
+      { new: true, upsert: true },
+    );
+  }
 
-	async findActiveByUser(userId: string): Promise<Subscription | null> {
-		return this.subscriptionModel.findOne({ userId, status: "active" });
-	}
+  async findActiveByUser(userId: string): Promise<Subscription | null> {
+    return this.subscriptionModel.findOne({ userId, status: 'active' });
+  }
 
-	async findByUser(userId: string): Promise<Subscription[]> {
-		return this.subscriptionModel.find({ userId }).sort({ createdAt: -1 });
-	}
+  async findByUser(userId: string): Promise<Subscription[]> {
+    return this.subscriptionModel.find({ userId }).sort({ createdAt: -1 });
+  }
 }

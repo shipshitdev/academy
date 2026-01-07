@@ -1,4 +1,4 @@
-import { Course } from "@interfaces/course.interface";
+import type { Course } from "@interfaces/course.interface";
 import type { IRequestOptions } from "@interfaces/request-options.interface";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
@@ -40,10 +40,7 @@ export const CourseService = {
     return handleResponse<Course>(response);
   },
 
-  async getAdminAll(
-    communityId?: string,
-    options?: IRequestOptions,
-  ): Promise<Course[]> {
+  async getAdminAll(communityId?: string, options?: IRequestOptions): Promise<Course[]> {
     const headers = await getAuthHeaders();
     const query = communityId ? `?communityId=${communityId}` : "";
     const response = await fetch(`${API_URL}/courses/admin${query}`, {

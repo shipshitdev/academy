@@ -1,15 +1,15 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
 import { Button } from "@agenticindiedev/ui";
 import { useSubscriptionStatus } from "@hooks/use-subscription-status";
+import type { Course } from "@interfaces/course.interface";
+import type { Lesson } from "@interfaces/lesson.interface";
 import { CourseService } from "@services/course.service";
 import { LessonService } from "@services/lesson.service";
 import { SubscriptionService } from "@services/subscription.service";
-import type { Course } from "@interfaces/course.interface";
-import type { Lesson } from "@interfaces/lesson.interface";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function CourseDetailPage() {
   const params = useParams();
@@ -81,13 +81,9 @@ export default function CourseDetailPage() {
       <div className="space-y-3">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <h1 className="text-3xl font-bold text-gray-900">{course.title}</h1>
-          {!isSubscribed && (
-            <Button onClick={handleSubscribe}>Subscribe for full access</Button>
-          )}
+          {!isSubscribed && <Button onClick={handleSubscribe}>Subscribe for full access</Button>}
         </div>
-        {course.description && (
-          <p className="text-gray-600">{course.description}</p>
-        )}
+        {course.description && <p className="text-gray-600">{course.description}</p>}
         {!isSubscribed && (
           <p className="text-sm text-gray-500">
             You are viewing the preview lessons. Subscribe to unlock everything.
@@ -106,9 +102,7 @@ export default function CourseDetailPage() {
               className="flex items-center justify-between rounded-lg border border-gray-200 bg-white p-4"
             >
               <div>
-                <h3 className="text-lg font-semibold text-gray-900">
-                  {lesson.title}
-                </h3>
+                <h3 className="text-lg font-semibold text-gray-900">{lesson.title}</h3>
                 {lesson.isPreview && (
                   <span className="mt-2 inline-flex rounded-full bg-green-100 px-2 py-1 text-xs font-semibold text-green-700">
                     Preview

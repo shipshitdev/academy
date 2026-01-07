@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
-import { SubscriptionService } from "@services/subscription.service";
 import type { Subscription } from "@interfaces/subscription.interface";
 import type { ISubscriptionStatus } from "@interfaces/subscription-status.interface";
+import { SubscriptionService } from "@services/subscription.service";
+import { useEffect, useState } from "react";
 
 export function useSubscriptionStatus(): ISubscriptionStatus {
   const { isSignedIn } = useAuth();
@@ -25,9 +25,7 @@ export function useSubscriptionStatus(): ISubscriptionStatus {
       .finally(() => setIsLoading(false));
   }, [isSignedIn]);
 
-  const isActive = subscriptions.some(
-    (subscription) => subscription.status === "active",
-  );
+  const isActive = subscriptions.some((subscription) => subscription.status === "active");
 
   return { isLoading, isActive };
 }

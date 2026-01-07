@@ -1,4 +1,4 @@
-import { Lesson } from "@interfaces/lesson.interface";
+import type { Lesson } from "@interfaces/lesson.interface";
 import type { IRequestOptions } from "@interfaces/request-options.interface";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
@@ -39,10 +39,7 @@ export const LessonService = {
     return handleResponse<Lesson>(response);
   },
 
-  async getAdminAll(
-    courseId?: string,
-    options?: IRequestOptions,
-  ): Promise<Lesson[]> {
+  async getAdminAll(courseId?: string, options?: IRequestOptions): Promise<Lesson[]> {
     const headers = await getAuthHeaders();
     const query = courseId ? `?courseId=${courseId}` : "";
     const response = await fetch(`${API_URL}/lessons/admin${query}`, {

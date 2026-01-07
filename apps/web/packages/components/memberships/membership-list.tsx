@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { MembershipService } from "@services/membership.service";
-import { Membership } from "@interfaces/membership.interface";
 import { Button } from "@agenticindiedev/ui";
+import type { Membership } from "@interfaces/membership.interface";
+import { MembershipService } from "@services/membership.service";
+import { useEffect, useState } from "react";
 
 export function MembershipList() {
   const [memberships, setMemberships] = useState<Membership[]>([]);
@@ -59,11 +59,7 @@ export function MembershipList() {
   }
 
   if (error) {
-    return (
-      <div className="p-4 bg-red-50 text-red-600 rounded-lg">
-        Error: {error}
-      </div>
-    );
+    return <div className="p-4 bg-red-50 text-red-600 rounded-lg">Error: {error}</div>;
   }
 
   return (
@@ -79,16 +75,16 @@ export function MembershipList() {
       ) : (
         <div className="space-y-2">
           {memberships.map((membership) => (
-            <div key={membership._id} className="p-4 border rounded-lg flex justify-between items-center">
+            <div
+              key={membership._id}
+              className="p-4 border rounded-lg flex justify-between items-center"
+            >
               <div>
                 <h3 className="font-medium">Community: {membership.communityId}</h3>
                 <p className="text-sm text-gray-500">Status: {membership.status}</p>
               </div>
               <div className="flex gap-2">
-                <Button
-                  variant="ghost"
-                  onClick={() => handleDelete(membership._id)}
-                >
+                <Button variant="ghost" onClick={() => handleDelete(membership._id)}>
                   Leave
                 </Button>
               </div>

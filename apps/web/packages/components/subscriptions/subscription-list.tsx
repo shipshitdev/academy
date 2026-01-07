@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { SubscriptionService } from "@services/subscription.service";
-import { Subscription } from "@interfaces/subscription.interface";
 import { Button } from "@agenticindiedev/ui";
+import type { Subscription } from "@interfaces/subscription.interface";
+import { SubscriptionService } from "@services/subscription.service";
+import { useEffect, useState } from "react";
 
 export function SubscriptionList() {
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
@@ -59,11 +59,7 @@ export function SubscriptionList() {
   }
 
   if (error) {
-    return (
-      <div className="p-4 bg-red-50 text-red-600 rounded-lg">
-        Error: {error}
-      </div>
-    );
+    return <div className="p-4 bg-red-50 text-red-600 rounded-lg">Error: {error}</div>;
   }
 
   return (
@@ -73,13 +69,14 @@ export function SubscriptionList() {
       </div>
 
       {subscriptions.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
-          No subscriptions yet.
-        </div>
+        <div className="text-center py-8 text-gray-500">No subscriptions yet.</div>
       ) : (
         <div className="space-y-2">
           {subscriptions.map((subscription) => (
-            <div key={subscription._id} className="p-4 border rounded-lg flex justify-between items-center">
+            <div
+              key={subscription._id}
+              className="p-4 border rounded-lg flex justify-between items-center"
+            >
               <div>
                 <h3 className="font-medium">Status: {subscription.status}</h3>
                 {subscription.currentPeriodEnd && (
@@ -90,10 +87,7 @@ export function SubscriptionList() {
               </div>
               <div className="flex gap-2">
                 {!subscription.cancelAtPeriodEnd && (
-                  <Button
-                    variant="ghost"
-                    onClick={() => handleCancel(subscription._id)}
-                  >
+                  <Button variant="ghost" onClick={() => handleCancel(subscription._id)}>
                     Cancel
                   </Button>
                 )}

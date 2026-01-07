@@ -1,13 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Button } from "@agenticindiedev/ui";
 import { MarkdownEditor } from "@components/markdown/markdown-editor";
-
-import type {
-  ILessonFormProps,
-  ILessonFormValues,
-} from "@interfaces/lesson-form.interface";
+import type { ILessonFormProps, ILessonFormValues } from "@interfaces/lesson-form.interface";
+import { useEffect, useState } from "react";
 
 const EMPTY_VALUES: ILessonFormValues = {
   title: "",
@@ -20,12 +16,7 @@ const EMPTY_VALUES: ILessonFormValues = {
   content: "",
 };
 
-export function LessonForm({
-  initialValues,
-  courses,
-  submitLabel,
-  onSubmit,
-}: ILessonFormProps) {
+export function LessonForm({ initialValues, courses, submitLabel, onSubmit }: ILessonFormProps) {
   const [values, setValues] = useState<ILessonFormValues>(EMPTY_VALUES);
   const [saving, setSaving] = useState(false);
 
@@ -33,10 +24,7 @@ export function LessonForm({
     setValues({ ...EMPTY_VALUES, ...initialValues });
   }, [initialValues]);
 
-  const handleChange = (
-    field: keyof ILessonFormValues,
-    value: string | number | boolean,
-  ): void => {
+  const handleChange = (field: keyof ILessonFormValues, value: string | number | boolean): void => {
     setValues((prev) => ({ ...prev, [field]: value }));
   };
 
@@ -93,9 +81,7 @@ export function LessonForm({
             className="w-full rounded-lg border border-gray-200 p-2"
             type="number"
             value={values.sortOrder}
-            onChange={(event) =>
-              handleChange("sortOrder", Number(event.target.value))
-            }
+            onChange={(event) => handleChange("sortOrder", Number(event.target.value))}
           />
         </label>
         <label className="space-y-2 text-sm">
@@ -128,10 +114,7 @@ export function LessonForm({
         </label>
       </div>
 
-      <MarkdownEditor
-        value={values.content}
-        onChange={(next) => handleChange("content", next)}
-      />
+      <MarkdownEditor value={values.content} onChange={(next) => handleChange("content", next)} />
 
       <Button onClick={handleSubmit} disabled={saving}>
         {saving ? "Saving..." : submitLabel}

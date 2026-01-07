@@ -1,11 +1,11 @@
-import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
-import { LessonsController } from "./lessons.controller";
-import { LessonsService } from "./lessons.service";
-import { Lesson, LessonSchema } from "./schemas/lesson.schema";
-import { Course, CourseSchema } from "../courses/schemas/course.schema";
-import { Community, CommunitySchema } from "../communities/schemas/community.schema";
-import { Subscription, SubscriptionSchema } from "../subscriptions/schemas/subscription.schema";
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { Community, CommunitySchema } from '../communities/schemas/community.schema';
+import { Course, CourseSchema } from '../courses/schemas/course.schema';
+import { Subscription, SubscriptionSchema } from '../subscriptions/schemas/subscription.schema';
+import { LessonsController } from './lessons.controller';
+import { LessonsService } from './lessons.service';
+import { Lesson, LessonSchema } from './schemas/lesson.schema';
 
 @Module({
   imports: [

@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 import { LessonForm } from "@components/admin/lesson-form";
-import { LessonService } from "@services/lesson.service";
-import { CourseService } from "@services/course.service";
 import type { Course } from "@interfaces/course.interface";
 import type { ILessonFormValues } from "@interfaces/lesson-form.interface";
+import { CourseService } from "@services/course.service";
+import { LessonService } from "@services/lesson.service";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const DEFAULT_VALUES: ILessonFormValues = {
   title: "",
@@ -24,7 +24,9 @@ export default function NewLessonPage() {
   const [courses, setCourses] = useState<Course[]>([]);
 
   useEffect(() => {
-    CourseService.getAdminAll().then(setCourses).catch(() => setCourses([]));
+    CourseService.getAdminAll()
+      .then(setCourses)
+      .catch(() => setCourses([]));
   }, []);
 
   const handleSubmit = async (values: ILessonFormValues): Promise<void> => {

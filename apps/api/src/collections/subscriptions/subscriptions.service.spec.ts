@@ -1,8 +1,8 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { Test, TestingModule } from "@nestjs/testing";
-import { getModelToken } from "@nestjs/mongoose";
-import { SubscriptionsService } from "./subscriptions.service";
-import { Subscription } from "./schemas/subscription.schema";
+import { getModelToken } from '@nestjs/mongoose';
+import { Test, type TestingModule } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { Subscription } from './schemas/subscription.schema';
+import { SubscriptionsService } from './subscriptions.service';
 
 const createMockModel = () => ({
   findOneAndUpdate: vi.fn(),
@@ -10,7 +10,7 @@ const createMockModel = () => ({
   find: vi.fn(),
 });
 
-describe("SubscriptionsService", () => {
+describe('SubscriptionsService', () => {
   let service: SubscriptionsService;
   let subscriptionModel: ReturnType<typeof createMockModel>;
 
@@ -27,25 +27,25 @@ describe("SubscriptionsService", () => {
     service = module.get<SubscriptionsService>(SubscriptionsService);
   });
 
-  it("should upsert subscription", async () => {
-    const result = { _id: "sub" };
+  it('should upsert subscription', async () => {
+    const result = { _id: 'sub' };
     subscriptionModel.findOneAndUpdate.mockResolvedValue(result);
 
     const response = await service.upsertFromStripe({
-      userId: "user",
-      stripeCustomerId: "cus",
-      stripeSubscriptionId: "sub",
-      status: "active",
+      userId: 'user',
+      stripeCustomerId: 'cus',
+      stripeSubscriptionId: 'sub',
+      status: 'active',
     });
 
     expect(response).toEqual(result);
   });
 
-  it("should find active subscription", async () => {
-    const result = { _id: "sub" };
+  it('should find active subscription', async () => {
+    const result = { _id: 'sub' };
     subscriptionModel.findOne.mockResolvedValue(result);
 
-    const response = await service.findActiveByUser("user");
+    const response = await service.findActiveByUser('user');
 
     expect(response).toEqual(result);
   });

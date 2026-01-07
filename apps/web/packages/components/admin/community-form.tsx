@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Button } from "@agenticindiedev/ui";
-
 import type {
   ICommunityFormProps,
   ICommunityFormValues,
 } from "@interfaces/community-form.interface";
+import { useEffect, useState } from "react";
 
 const EMPTY_VALUES: ICommunityFormValues = {
   title: "",
@@ -20,11 +19,7 @@ const EMPTY_VALUES: ICommunityFormValues = {
   coverImageUrl: "",
 };
 
-export function CommunityForm({
-  initialValues,
-  submitLabel,
-  onSubmit,
-}: ICommunityFormProps) {
+export function CommunityForm({ initialValues, submitLabel, onSubmit }: ICommunityFormProps) {
   const [values, setValues] = useState<ICommunityFormValues>(EMPTY_VALUES);
   const [saving, setSaving] = useState(false);
 
@@ -34,7 +29,7 @@ export function CommunityForm({
 
   const handleChange = (
     field: keyof ICommunityFormValues,
-    value: string | number | boolean,
+    value: string | number | boolean
   ): void => {
     setValues((prev) => ({ ...prev, [field]: value }));
   };
@@ -86,9 +81,7 @@ export function CommunityForm({
             className="w-full rounded-lg border border-gray-200 p-2"
             type="number"
             value={values.priceMonthly}
-            onChange={(event) =>
-              handleChange("priceMonthly", Number(event.target.value))
-            }
+            onChange={(event) => handleChange("priceMonthly", Number(event.target.value))}
             disabled={values.isFree}
           />
         </label>
@@ -98,9 +91,7 @@ export function CommunityForm({
             className="w-full rounded-lg border border-gray-200 p-2"
             type="number"
             value={values.sortOrder}
-            onChange={(event) =>
-              handleChange("sortOrder", Number(event.target.value))
-            }
+            onChange={(event) => handleChange("sortOrder", Number(event.target.value))}
           />
         </label>
         <label className="space-y-2 text-sm">

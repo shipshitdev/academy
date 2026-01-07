@@ -1,12 +1,12 @@
-import { describe, it, expect, beforeEach, vi } from "vitest";
-import { Test, TestingModule } from "@nestjs/testing";
-import { getModelToken } from "@nestjs/mongoose";
-import { ForbiddenException, NotFoundException } from "@nestjs/common";
-import { LessonsService } from "./lessons.service";
-import { Lesson } from "./schemas/lesson.schema";
-import { Course } from "../courses/schemas/course.schema";
-import { Community } from "../communities/schemas/community.schema";
-import { Subscription } from "../subscriptions/schemas/subscription.schema";
+import { ForbiddenException, NotFoundException } from '@nestjs/common';
+import { getModelToken } from '@nestjs/mongoose';
+import { Test, type TestingModule } from '@nestjs/testing';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { Community } from '../communities/schemas/community.schema';
+import { Course } from '../courses/schemas/course.schema';
+import { Subscription } from '../subscriptions/schemas/subscription.schema';
+import { LessonsService } from './lessons.service';
+import { Lesson } from './schemas/lesson.schema';
 
 const createMockModel = () => ({
   findOne: vi.fn(),
@@ -16,7 +16,7 @@ const createMockModel = () => ({
   deleteOne: vi.fn(),
 });
 
-describe("LessonsService", () => {
+describe('LessonsService', () => {
   let service: LessonsService;
   let lessonModel: ReturnType<typeof createMockModel>;
   let courseModel: ReturnType<typeof createMockModel>;
@@ -42,35 +42,43 @@ describe("LessonsService", () => {
     service = module.get<LessonsService>(LessonsService);
   });
 
-  it("should throw when lesson not found", async () => {
+  it('should throw when lesson not found', async () => {
     lessonModel.findOne.mockResolvedValue(null);
 
-    await expect(service.findBySlug("missing"))
-      .rejects
-      .toThrow(NotFoundException);
+    await expect(service.findBySlug('missing')).rejects.toThrow(NotFoundException);
   });
 
-  it("should return preview lesson without subscription", async () => {
-    const lesson = { _id: "1", slug: "preview", courseId: "course", isPublished: true, isPreview: true };
+  it('should return preview lesson without subscription', async () => {
+    const lesson = {
+      _id: '1',
+      slug: 'preview',
+      courseId: 'course',
+      isPublished: true,
+      isPreview: true,
+    };
     lessonModel.findOne.mockResolvedValue(lesson);
-    courseModel.findById.mockResolvedValue({ _id: "course", communityId: "community" });
-    communityModel.findById.mockResolvedValue({ _id: "community", isFree: false });
+    courseModel.findById.mockResolvedValue({ _id: 'course', communityId: 'community' });
+    communityModel.findById.mockResolvedValue({ _id: 'community', isFree: false });
     subscriptionModel.findOne.mockResolvedValue(null);
 
-    const result = await service.findBySlug("preview");
+    const result = await service.findBySlug('preview');
 
     expect(result).toEqual(lesson);
   });
 
-  it("should block non-preview lesson without subscription", async () => {
-    const lesson = { _id: "1", slug: "locked", courseId: "course", isPublished: true, isPreview: false };
+  it('should block non-preview lesson without subscription', async () => {
+    const lesson = {
+      _id: '1',
+      slug: 'locked',
+      courseId: 'course',
+      isPublished: true,
+      isPreview: false,
+    };
     lessonModel.findOne.mockResolvedValue(lesson);
-    courseModel.findById.mockResolvedValue({ _id: "course", communityId: "community" });
-    communityModel.findById.mockResolvedValue({ _id: "community", isFree: false });
+    courseModel.findById.mockResolvedValue({ _id: 'course', communityId: 'community' });
+    communityModel.findById.mockResolvedValue({ _id: 'community', isFree: false });
     subscriptionModel.findOne.mockResolvedValue(null);
 
-    await expect(service.findBySlug("locked"))
-      .rejects
-      .toThrow(ForbiddenException);
+    await expect(service.findBySlug('locked')).rejects.toThrow(ForbiddenException);
   });
 });

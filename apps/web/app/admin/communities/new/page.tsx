@@ -1,9 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { CommunityForm } from "@components/admin/community-form";
-import { CommunityService } from "@services/community.service";
 import type { ICommunityFormValues } from "@interfaces/community-form.interface";
+import { CommunityService } from "@services/community.service";
+import { useRouter } from "next/navigation";
 
 const DEFAULT_VALUES: ICommunityFormValues = {
   title: "",

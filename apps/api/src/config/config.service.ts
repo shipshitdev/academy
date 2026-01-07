@@ -1,8 +1,8 @@
-import * as dotenv from "dotenv";
-import * as fs from "fs";
-import * as Joi from "joi";
-import * as path from "path";
-import type { IEnvConfig } from "./env-config.interface";
+import * as fs from 'node:fs';
+import * as path from 'node:path';
+import * as dotenv from 'dotenv';
+import * as Joi from 'joi';
+import type { IEnvConfig } from './env-config.interface';
 
 export class ConfigService {
   private readonly envConfig: IEnvConfig;
@@ -18,22 +18,22 @@ export class ConfigService {
 
     // Determine which env files to load based on NODE_ENV
     const env = process.env.NODE_ENV;
-    const isProduction = env === "production";
-    const isTest = env === "test";
+    const isProduction = env === 'production';
+    const isTest = env === 'test';
 
     // Build absolute paths for env files
     // In development: root/.env, root/.env.local, apps/api/.env, apps/api/.env.local
     // In production: root/.env.production, apps/api/.env.production
     // In test: root/.env.test, apps/api/.env.test
     const envFiles = isProduction
-      ? [path.join(monorepoRoot, ".env.production"), path.join(apiDir, ".env.production")]
+      ? [path.join(monorepoRoot, '.env.production'), path.join(apiDir, '.env.production')]
       : isTest
-        ? [path.join(monorepoRoot, ".env.test"), path.join(apiDir, ".env.test")]
+        ? [path.join(monorepoRoot, '.env.test'), path.join(apiDir, '.env.test')]
         : [
-            path.join(monorepoRoot, ".env"),
-            path.join(monorepoRoot, ".env.local"),
-            path.join(apiDir, ".env"),
-            path.join(apiDir, ".env.local"),
+            path.join(monorepoRoot, '.env'),
+            path.join(monorepoRoot, '.env.local'),
+            path.join(apiDir, '.env'),
+            path.join(apiDir, '.env.local'),
           ];
 
     // Load each env file in order (later files override earlier ones)
@@ -51,11 +51,11 @@ export class ConfigService {
     let dir = startDir;
     // Walk up looking for package.json with name containing "api"
     while (dir !== path.dirname(dir)) {
-      const pkgPath = path.join(dir, "package.json");
+      const pkgPath = path.join(dir, 'package.json');
       if (fs.existsSync(pkgPath)) {
         try {
-          const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
-          if (pkg.name?.includes("api")) {
+          const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
+          if (pkg.name?.includes('api')) {
             return dir;
           }
         } catch {}
@@ -70,10 +70,10 @@ export class ConfigService {
     let dir = startDir;
     // Walk up looking for package.json with workspaces
     while (dir !== path.dirname(dir)) {
-      const pkgPath = path.join(dir, "package.json");
+      const pkgPath = path.join(dir, 'package.json');
       if (fs.existsSync(pkgPath)) {
         try {
-          const pkg = JSON.parse(fs.readFileSync(pkgPath, "utf-8"));
+          const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf-8'));
           if (pkg.workspaces) {
             return dir;
           }
@@ -82,7 +82,7 @@ export class ConfigService {
       dir = path.dirname(dir);
     }
     // Fallback: go up 2 levels from api dir
-    return path.resolve(startDir, "../..");
+    return path.resolve(startDir, '../..');
   }
 
   public get<K extends keyof IEnvConfig>(key: K): IEnvConfig[K] {
@@ -98,26 +98,26 @@ export class ConfigService {
       PORT: Joi.number().default(3010),
 
       NODE_ENV: Joi.string()
-        .valid("development", "staging", "production", "test")
-        .default("development"),
+        .valid('development', 'staging', 'production', 'test')
+        .default('development'),
 
       // MongoDB
-      MONGODB_URI: Joi.string().default("mongodb://localhost/api"),
+      MONGODB_URI: Joi.string().default('mongodb://localhost/api'),
 
       // Stripe
       STRIPE_SECRET_KEY: Joi.string().required(),
-      STRIPE_PRICE_ID: Joi.string().optional().allow(""),
-      STRIPE_WEBHOOK_SECRET: Joi.string().optional().allow(""),
+      STRIPE_PRICE_ID: Joi.string().optional().allow(''),
+      STRIPE_WEBHOOK_SECRET: Joi.string().optional().allow(''),
 
       // Clerk
       CLERK_SECRET_KEY: Joi.string().required(),
 
       // Admin
-      ADMIN_EMAIL_ALLOWLIST: Joi.string().optional().allow(""),
+      ADMIN_EMAIL_ALLOWLIST: Joi.string().optional().allow(''),
 
       // App URLs
-      APP_URL: Joi.string().optional().allow(""),
-      NEXT_PUBLIC_APP_URL: Joi.string().optional().allow(""),
+      APP_URL: Joi.string().optional().allow(''),
+      NEXT_PUBLIC_APP_URL: Joi.string().optional().allow(''),
     });
 
     const { error, value: validatedEnvConfig } = envVarsSchema.validate(envConfig, {
@@ -133,15 +133,15 @@ export class ConfigService {
   }
 
   get isDevelopment(): boolean {
-    return Boolean(this.envConfig.NODE_ENV === "development");
+    return Boolean(this.envConfig.NODE_ENV === 'development');
   }
 
   get isStaging(): boolean {
-    return Boolean(this.envConfig.NODE_ENV === "staging");
+    return Boolean(this.envConfig.NODE_ENV === 'staging');
   }
 
   get isProduction(): boolean {
-    return Boolean(this.envConfig.NODE_ENV === "production");
+    return Boolean(this.envConfig.NODE_ENV === 'production');
   }
 
   get mongoURL(): string {

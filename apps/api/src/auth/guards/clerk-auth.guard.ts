@@ -1,11 +1,11 @@
+import { verifyToken } from '@clerk/backend';
 import {
+  type CanActivate,
+  type ExecutionContext,
   Injectable,
-  CanActivate,
-  ExecutionContext,
   UnauthorizedException,
-} from "@nestjs/common";
-import { verifyToken } from "@clerk/backend";
-import { ConfigService } from "../../config/config.service";
+} from '@nestjs/common';
+import type { ConfigService } from '../../config/config.service';
 
 @Injectable()
 export class ClerkAuthGuard implements CanActivate {
@@ -15,24 +15,24 @@ export class ClerkAuthGuard implements CanActivate {
     const request = context.switchToHttp().getRequest();
     const authHeader = request.headers.authorization;
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      throw new UnauthorizedException("No authorization token provided");
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      throw new UnauthorizedException('No authorization token provided');
     }
 
-    const token = authHeader.replace("Bearer ", "");
-    const clerkSecretKey = this.configService.get("CLERK_SECRET_KEY");
+    const token = authHeader.replace('Bearer ', '');
+    const clerkSecretKey = this.configService.get('CLERK_SECRET_KEY');
 
     try {
       const session = await verifyToken(token, {
-        secretKey: clerkSecretKey || "",
+        secretKey: clerkSecretKey || '',
       });
       request.user = {
         userId: session.sub,
         sessionId: session.sid,
       };
       return true;
-    } catch (error) {
-      throw new UnauthorizedException("Invalid or expired token");
+    } catch (_error) {
+      throw new UnauthorizedException('Invalid or expired token');
     }
   }
 }

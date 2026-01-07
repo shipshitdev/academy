@@ -1,35 +1,35 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import type { Document } from 'mongoose';
 
 export type EventDocument = Event & Document;
 
 @Schema({ timestamps: true })
 export class Event {
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   title: string;
 
-  @Prop()
+  @Prop({ type: String })
   description?: string;
 
-  @Prop({ required: true })
+  @Prop({ type: Date, required: true })
   startsAt: Date;
 
-  @Prop()
+  @Prop({ type: Date })
   endsAt?: Date;
 
-  @Prop({ required: true })
+  @Prop({ type: String, required: true })
   meetUrl: string;
 
-  @Prop()
+  @Prop({ type: String })
   communityId?: string;
 
-  @Prop({ default: false })
+  @Prop({ type: Boolean, default: false })
   isPaidOnly: boolean;
 
-  @Prop({ default: false })
+  @Prop({ type: Boolean, default: false })
   isPublished: boolean;
 
-  @Prop()
+  @Prop({ type: String })
   createdBy?: string;
 }
 

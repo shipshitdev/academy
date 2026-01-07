@@ -1,6 +1,6 @@
 export interface IEnvConfig {
   PORT: number;
-  NODE_ENV: "development" | "staging" | "production" | "test";
+  NODE_ENV: 'development' | 'staging' | 'production' | 'test';
 
   // MongoDB
   MONGODB_URI: string;

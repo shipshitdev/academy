@@ -1,11 +1,11 @@
-import { createClerkClient } from "@clerk/backend";
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
-import { InjectModel } from "@nestjs/mongoose";
-import type { Model } from "mongoose";
-import { ConfigService } from "../../config/config.service";
-import { CreateCommentDto } from "./dto/create-comment.dto";
-import { UpdateCommentDto } from "./dto/update-comment.dto";
-import { Comment, type CommentDocument } from "./schemas/comment.schema";
+import { createClerkClient } from '@clerk/backend';
+import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import type { Model } from 'mongoose';
+import type { ConfigService } from '../../config/config.service';
+import type { CreateCommentDto } from './dto/create-comment.dto';
+import type { UpdateCommentDto } from './dto/update-comment.dto';
+import { Comment, type CommentDocument } from './schemas/comment.schema';
 
 @Injectable()
 export class CommentsService {
@@ -29,11 +29,7 @@ export class CommentsService {
   }
 
   async findByLessonId(lessonId: string): Promise<Comment[]> {
-    return this.commentModel
-      .find({ lessonId })
-      .sort({ createdAt: -1 })
-      .lean()
-      .exec();
+    return this.commentModel.find({ lessonId }).sort({ createdAt: -1 }).lean().exec();
   }
 
   async findOne(id: string): Promise<Comment> {
@@ -51,7 +47,7 @@ export class CommentsService {
     }
 
     if (comment.userId !== userId) {
-      throw new ForbiddenException("You can only edit your own comments");
+      throw new ForbiddenException('You can only edit your own comments');
     }
 
     Object.assign(comment, updateCommentDto);
@@ -65,7 +61,7 @@ export class CommentsService {
     }
 
     if (comment.userId !== userId) {
-      throw new ForbiddenException("You can only delete your own comments");
+      throw new ForbiddenException('You can only delete your own comments');
     }
 
     await this.commentModel.findByIdAndDelete(id).exec();
@@ -73,21 +69,21 @@ export class CommentsService {
 
   private async getUserInfo(userId: string): Promise<{ userName: string; userAvatar?: string }> {
     try {
-      const clerkSecretKey = this.configService.get("CLERK_SECRET_KEY");
+      const clerkSecretKey = this.configService.get('CLERK_SECRET_KEY');
       const clerk = createClerkClient({ secretKey: clerkSecretKey });
       const user = await clerk.users.getUser(userId);
 
       const userName =
         user.firstName && user.lastName
           ? `${user.firstName} ${user.lastName}`
-          : user.username || "Anonymous";
+          : user.username || 'Anonymous';
 
       return {
         userName,
         userAvatar: user.imageUrl,
       };
     } catch {
-      return { userName: "Anonymous" };
+      return { userName: 'Anonymous' };
     }
   }
 }

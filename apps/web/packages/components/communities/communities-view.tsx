@@ -1,16 +1,16 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import Link from "next/link";
-import { useAuth } from "@clerk/nextjs";
 import { Badge, Button, Card, CardContent, Skeleton } from "@agenticindiedev/ui";
+import { useAuth } from "@clerk/nextjs";
+import { useSubscriptionStatus } from "@hooks/use-subscription-status";
+import type { Community } from "@interfaces/community.interface";
+import type { ICommunityCardProps } from "@interfaces/community-card.interface";
+import type { Membership } from "@interfaces/membership.interface";
 import { CommunityService } from "@services/community.service";
 import { MembershipService } from "@services/membership.service";
 import { SubscriptionService } from "@services/subscription.service";
-import { useSubscriptionStatus } from "@hooks/use-subscription-status";
-import type { Community } from "@interfaces/community.interface";
-import type { Membership } from "@interfaces/membership.interface";
-import type { ICommunityCardProps } from "@interfaces/community-card.interface";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
 
 function CommunityCard({
   community,
@@ -28,13 +28,9 @@ function CommunityCard({
       <CardContent className="p-0">
         <div className="flex items-start justify-between">
           <div>
-            <h3 className="text-xl font-semibold text-foreground">
-              {community.title}
-            </h3>
+            <h3 className="text-xl font-semibold text-foreground">{community.title}</h3>
             {community.description && (
-              <p className="mt-2 text-sm text-muted-foreground">
-                {community.description}
-              </p>
+              <p className="mt-2 text-sm text-muted-foreground">{community.description}</p>
             )}
           </div>
           <Badge variant={isFree ? "success" : "secondary"}>
@@ -104,7 +100,7 @@ export function CommunitiesView() {
 
   const joinedIds = useMemo(
     () => new Set(memberships.map((membership) => membership.communityId)),
-    [memberships],
+    [memberships]
   );
 
   useEffect((): (() => void) => {

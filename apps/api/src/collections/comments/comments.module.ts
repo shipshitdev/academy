@@ -1,9 +1,9 @@
-import { Module } from "@nestjs/common";
-import { MongooseModule } from "@nestjs/mongoose";
-import { ConfigModule } from "../../config/config.module";
-import { CommentsController } from "./comments.controller";
-import { CommentsService } from "./comments.service";
-import { Comment, CommentSchema } from "./schemas/comment.schema";
+import { Module } from '@nestjs/common';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '../../config/config.module';
+import { CommentsController } from './comments.controller';
+import { CommentsService } from './comments.service';
+import { Comment, CommentSchema } from './schemas/comment.schema';
 
 @Module({
   imports: [

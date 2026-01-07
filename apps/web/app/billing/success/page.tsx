@@ -1,7 +1,8 @@
 import { ArrowRight, Check, MessageCircle } from "lucide-react";
 import Link from "next/link";
 
-const DISCORD_INVITE_URL = process.env.NEXT_PUBLIC_DISCORD_INVITE_URL || "https://discord.gg/your-invite";
+const DISCORD_INVITE_URL =
+  process.env.NEXT_PUBLIC_DISCORD_INVITE_URL || "https://discord.gg/your-invite";
 
 export default function BillingSuccessPage() {
   return (
