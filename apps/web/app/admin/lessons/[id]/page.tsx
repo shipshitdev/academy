@@ -18,6 +18,8 @@ const DEFAULT_VALUES: ILessonFormValues = {
   isPreview: false,
   videoId: "",
   content: "",
+  actions: [],
+  prompts: [],
 };
 
 function toFormValues(lesson: Lesson): ILessonFormValues {
@@ -30,6 +32,8 @@ function toFormValues(lesson: Lesson): ILessonFormValues {
     isPreview: lesson.isPreview,
     videoId: lesson.videoId || "",
     content: lesson.content || "",
+    actions: lesson.actions || [],
+    prompts: lesson.prompts || [],
   };
 }
 

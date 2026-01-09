@@ -182,7 +182,13 @@ const CATEGORIES = [
   { name: "Marketing", icon: Megaphone, color: "text-emerald-400", bgColor: "bg-emerald-500/10" },
 ];
 
-function ToolCard({ tool }: { tool: Tool }) {
+function ToolCard({
+  tool,
+  categoryColors,
+}: {
+  tool: Tool;
+  categoryColors: { color: string; bgColor: string };
+}) {
   const Icon = tool.icon;
 
   return (
@@ -200,8 +206,10 @@ function ToolCard({ tool }: { tool: Tool }) {
         </span>
       )}
 
-      <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10">
-        <Icon className="h-6 w-6 text-primary" />
+      <div
+        className={`mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg ${categoryColors.bgColor}`}
+      >
+        <Icon className={`h-6 w-6 ${categoryColors.color}`} />
       </div>
 
       <h3 className="flex items-center gap-2 text-lg font-semibold text-foreground">
@@ -290,7 +298,11 @@ export default function ToolsPage() {
 
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {categoryTools.map((tool) => (
-                  <ToolCard key={tool.name} tool={tool} />
+                  <ToolCard
+                    key={tool.name}
+                    tool={tool}
+                    categoryColors={{ color: category.color, bgColor: category.bgColor }}
+                  />
                 ))}
               </div>
             </div>

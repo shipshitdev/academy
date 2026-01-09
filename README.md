@@ -1,6 +1,6 @@
-# Open Learning Center
+# Academy
 
-Full-stack monorepo workspace for learning communities and educational content.
+ShipShit.dev Academy - Stop planning. Start shipping. Full-stack monorepo workspace for learning communities and educational content.
 
 ## Structure
 

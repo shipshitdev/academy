@@ -1,6 +1,6 @@
 # Docker Compose v2 Configuration
-# Production Docker Compose for Open Learning Center API
-# Web frontend is deployed on Vercel
+# Production Docker Compose for Academy API
+# ShipShit.dev Academy - Web frontend is deployed on Vercel
 #
 # Usage:
 #   docker compose -f docker/docker-compose.production.yml up -d --build
@@ -10,8 +10,8 @@ services:
     build:
       context: ..
       dockerfile: apps/api/Dockerfile
-    image: ghcr.io/shipshitdev/open-learning-center-api:latest
-    container_name: olc-api
+    image: ghcr.io/shipshitdev/academy-api:latest
+    container_name: academy-api
     restart: unless-stopped
     ports:
       - '3010:3010'
@@ -21,7 +21,7 @@ services:
       - NODE_ENV=production
       - PORT=3010
     networks:
-      - olc-network
+      - academy-network
     healthcheck:
       test: ['CMD', 'curl', '-f', 'http://localhost:3010/api/docs']
       interval: 30s
@@ -30,6 +30,6 @@ services:
       start_period: 40s
 
 networks:
-  olc-network:
-    name: olc-network
+  academy-network:
+    name: academy-network
     driver: bridge

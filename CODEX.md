@@ -1,6 +1,6 @@
-# Open Learning Center
+# Academy
 
-Codex-specific entry point. Documentation in `.agent/`.
+ShipShit.dev Academy - Codex-specific entry point. Documentation in `.agent/`.
 
 ## Documentation
 

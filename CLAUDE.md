@@ -1,6 +1,6 @@
-# Open Learning Center
+# Academy
 
-Claude-specific entry point. Documentation in `.agent/`.
+ShipShit.dev Academy - Claude-specific entry point. Documentation in `.agent/`.
 
 ## Commands
 

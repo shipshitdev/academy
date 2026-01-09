@@ -174,10 +174,21 @@ export default function PricingPage() {
         </div>
       </section>
 
-      {/* Pricing Card */}
+      {/* Pricing Cards */}
       <section className="py-12">
-        <div className="mx-auto max-w-xl px-6">
-          <PricingCard variant="interactive" featureStyle="checklist" />
+        <div className="mx-auto max-w-5xl px-6">
+          <div className="grid gap-8 md:grid-cols-2">
+            <PricingCard
+              variant="interactive"
+              featureStyle="checklist"
+              pricingOption="monthly"
+            />
+            <PricingCard
+              variant="interactive"
+              featureStyle="checklist"
+              pricingOption="bundle"
+            />
+          </div>
         </div>
       </section>
 

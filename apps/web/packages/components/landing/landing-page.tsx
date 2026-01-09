@@ -1,7 +1,7 @@
 "use client";
 
-import { Card, CardContent } from "@shipshitdev/ui";
 import { PRICING_AMOUNT, PricingCard } from "@components/pricing";
+import { Card, CardContent } from "@shipshitdev/ui";
 import {
   ArrowRight,
   Briefcase,
@@ -240,15 +240,24 @@ function HeroSection() {
 
         <h1 className="animate-fade-in-up text-5xl font-bold tracking-tight text-foreground sm:text-6xl lg:text-7xl">
           Build profitable businesses{" "}
-          <span
-            className="bg-gradient-to-r from-primary via-violet-400 to-primary"
-            style={{
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-          >
-            with AI
+          <span className="relative inline-block px-3 py-1">
+            <span
+              className="absolute inset-0 rounded-lg bg-gradient-to-r from-primary/20 via-violet-400/20 to-primary/20 blur-md"
+              aria-hidden="true"
+            />
+            <span
+              className="relative z-10 bg-gradient-to-r from-primary via-violet-400 to-primary bg-clip-text font-extrabold text-transparent"
+              style={{
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              with AI
+            </span>
+            <span
+              className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-primary via-violet-400 to-primary rounded-full"
+              aria-hidden="true"
+            />
           </span>
         </h1>
 
@@ -756,7 +765,7 @@ function Footer() {
       <div className="mx-auto max-w-6xl px-6">
         <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
           <p className="text-sm text-muted-foreground">
-            © 2026 Open Learning Center. All rights reserved.
+            © 2026 Academy. ShipShit.dev. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-sm text-muted-foreground">
             <Link href="/courses" className="hover:text-foreground transition-colors">

@@ -1,3 +1,15 @@
+export interface LessonAction {
+  title: string;
+  content: string;
+  description?: string;
+}
+
+export interface LessonPrompt {
+  title: string;
+  prompt: string;
+  description?: string;
+}
+
 export interface Lesson {
   _id: string;
   title: string;
@@ -8,4 +20,6 @@ export interface Lesson {
   sortOrder: number;
   isPublished: boolean;
   isPreview: boolean;
+  actions?: LessonAction[];
+  prompts?: LessonPrompt[];
 }

@@ -6,7 +6,11 @@ import "./globals.scss";
 export const metadata: Metadata = {
   title: "Open Learning Center",
   description:
-    "Learn to build profitable businesses with AI. E-commerce, indie dev, and content creation tracks.",
+    "Stop planning. Start shipping. Learn to build profitable businesses with AI. Ship apps, sell products, grow audiences.",
+  icons: {
+    icon: "/icon.svg",
+    apple: "/icon.svg",
+  },
 };
 
 export default function RootLayout({

@@ -8,7 +8,8 @@ YELLOW='\033[1;33m'
 NC='\033[0m'
 
 echo -e "${GREEN}========================================${NC}"
-echo -e "${GREEN}  Open Learning Center - API Deploy    ${NC}"
+echo -e "${GREEN}  Academy - API Deploy                 ${NC}"
+echo -e "${GREEN}  ShipShit.dev                         ${NC}"
 echo -e "${GREEN}========================================${NC}"
 
 # Check if running in the correct directory
@@ -39,7 +40,7 @@ if curl -sf http://localhost:3010/api/docs > /dev/null 2>&1; then
     echo -e "${GREEN}✓ API is healthy (port 3010)${NC}"
 else
     echo -e "${RED}✗ API health check failed${NC}"
-    echo -e "${YELLOW}Check logs: docker logs olc-api${NC}"
+    echo -e "${YELLOW}Check logs: docker logs academy-api${NC}"
 fi
 
 echo -e "${GREEN}========================================${NC}"

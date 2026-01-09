@@ -17,6 +17,8 @@ const DEFAULT_VALUES: ILessonFormValues = {
   isPreview: false,
   videoId: "",
   content: "",
+  actions: [],
+  prompts: [],
 };
 
 export default function NewLessonPage() {

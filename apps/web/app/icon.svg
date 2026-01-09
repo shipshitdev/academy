@@ -1,0 +1,75 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg-gradient" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#8B5CF6"/>
+      <stop offset="100%" stop-color="#6366F1"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background with rounded corners -->
+  <rect width="32" height="32" rx="6" fill="url(#bg-gradient)"/>
+
+  <!-- Book icon - Left page -->
+  <path
+    d="M8 7C8 6.44772 8.44772 6 9 6H13C14.6569 6 16 7.34315 16 9V23C16 23.5523 15.5523 24 15 24H9C8.44772 24 8 23.5523 8 23V7Z"
+    fill="white"
+    opacity="0.95"
+  />
+
+  <!-- Book icon - Right page -->
+  <path
+    d="M24 7C24 6.44772 23.5523 6 23 6H19C17.3431 6 16 7.34315 16 9V23C16 23.5523 16.4477 24 17 24H23C23.5523 24 24 23.5523 24 23V7Z"
+    fill="white"
+    opacity="0.85"
+  />
+
+  <!-- Binding/spine -->
+  <line
+    x1="16"
+    y1="6"
+    x2="16"
+    y2="24"
+    stroke="white"
+    stroke-width="2"
+    stroke-linecap="round"
+    opacity="0.9"
+  />
+
+  <!-- Decorative lines on pages -->
+  <line
+    x1="10"
+    y1="11"
+    x2="14"
+    y2="11"
+    stroke="white"
+    stroke-width="1"
+    opacity="0.5"
+  />
+  <line
+    x1="10"
+    y1="14"
+    x2="14"
+    y2="14"
+    stroke="white"
+    stroke-width="1"
+    opacity="0.5"
+  />
+  <line
+    x1="18"
+    y1="11"
+    x2="22"
+    y2="11"
+    stroke="white"
+    stroke-width="1"
+    opacity="0.5"
+  />
+  <line
+    x1="18"
+    y1="14"
+    x2="22"
+    y2="14"
+    stroke="white"
+    stroke-width="1"
+    opacity="0.5"
+  />
+</svg>

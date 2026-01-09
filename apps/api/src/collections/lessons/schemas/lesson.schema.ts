@@ -29,6 +29,38 @@ export class Lesson {
   @Prop({ type: Boolean, default: false })
   isPreview: boolean;
 
+  @Prop({
+    type: [
+      {
+        title: { type: String, required: true },
+        content: { type: String, required: true },
+        description: { type: String },
+      },
+    ],
+    default: [],
+  })
+  actions?: Array<{
+    title: string;
+    content: string;
+    description?: string;
+  }>;
+
+  @Prop({
+    type: [
+      {
+        title: { type: String, required: true },
+        prompt: { type: String, required: true },
+        description: { type: String },
+      },
+    ],
+    default: [],
+  })
+  prompts?: Array<{
+    title: string;
+    prompt: string;
+    description?: string;
+  }>;
+
   @Prop({ type: String })
   createdBy?: string;
 }

@@ -344,7 +344,7 @@ function readLesson(pathValue: string): ILessonSeed {
 }
 
 async function seed(): Promise<void> {
-  const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/open-learning-center';
+  const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/academy';
 
   await mongoose.connect(mongoUri);
 

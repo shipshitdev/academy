@@ -1,5 +1,5 @@
 {
-	"name": "open-learning-center",
+	"name": "academy",
 	"private": true,
 	"scripts": {
 		"dev": "bun run dev:api & bun run dev:web",

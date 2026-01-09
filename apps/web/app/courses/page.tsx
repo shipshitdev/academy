@@ -153,6 +153,9 @@ export default function CoursesPage() {
           })
         );
 
+        // Backend already sorts by sortOrder, then title
+        // If you need to change the order, update the sortOrder field in the database
+        // via the admin interface: vibe-coder-core=1, ecom-builder-core=2, content-creation-core=3
         setCourses(coursesWithLessons);
       } catch (err) {
         if (err instanceof Error && err.name !== "AbortError") {

@@ -1,5 +1,13 @@
 import { Type } from 'class-transformer';
-import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator';
+import {
+  IsArray,
+  IsBoolean,
+  IsNumber,
+  IsObject,
+  IsOptional,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
 
 export class CreateLessonDto {
   @IsString()
@@ -32,4 +40,40 @@ export class CreateLessonDto {
   @IsOptional()
   @IsBoolean()
   isPreview?: boolean;
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => ActionDto)
+  actions?: ActionDto[];
+
+  @IsOptional()
+  @IsArray()
+  @ValidateNested({ each: true })
+  @Type(() => PromptDto)
+  prompts?: PromptDto[];
+}
+
+class ActionDto {
+  @IsString()
+  title: string;
+
+  @IsString()
+  content: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
+}
+
+class PromptDto {
+  @IsString()
+  title: string;
+
+  @IsString()
+  prompt: string;
+
+  @IsOptional()
+  @IsString()
+  description?: string;
 }

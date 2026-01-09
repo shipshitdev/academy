@@ -3,6 +3,8 @@
 import { Button, Loading } from "@shipshitdev/ui";
 import { useAuth } from "@clerk/nextjs";
 import { MarkdownRenderer } from "@components/markdown/markdown-renderer";
+import { ActionBox } from "@components/courses/action-box";
+import { PromptBox } from "@components/courses/prompt-box";
 import { useSubscriptionStatus } from "@hooks/use-subscription-status";
 import type { Course } from "@interfaces/course.interface";
 import type { Lesson } from "@interfaces/lesson.interface";
@@ -383,6 +385,42 @@ export default function LessonPage() {
           )}
 
           {lesson.content && <MarkdownRenderer content={lesson.content} />}
+
+          {/* Actions Section */}
+          {lesson.actions && lesson.actions.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
+                <span className="h-6 w-1 rounded-full bg-primary" />
+                Actions
+              </h2>
+              <div className="space-y-4">
+                {lesson.actions.map((action, index) => (
+                  <ActionBox
+                    key={`action-${index}-${action.title || ""}-${action.content?.substring(0, 10) || ""}`}
+                    action={action}
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Prompts Section */}
+          {lesson.prompts && lesson.prompts.length > 0 && (
+            <div className="mt-12">
+              <h2 className="text-2xl font-bold text-foreground mb-6 flex items-center gap-2">
+                <span className="h-6 w-1 rounded-full bg-blue-500" />
+                Prompts
+              </h2>
+              <div className="space-y-4">
+                {lesson.prompts.map((prompt, index) => {
+                  const promptKey = `${prompt.title || ""}-${prompt.prompt?.substring(0, 20) || ""}-${index}`;
+                  return (
+                    <PromptBox key={promptKey} prompt={prompt} />
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
           <div className="mt-12 pt-8 border-t border-border flex flex-wrap items-center gap-3">
             {canMarkComplete ? (

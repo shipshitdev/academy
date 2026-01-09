@@ -1,4 +1,5 @@
 import type { Course } from "@interfaces/course.interface";
+import type { LessonAction, LessonPrompt } from "@interfaces/lesson.interface";
 
 export interface ILessonFormValues {
   title: string;
@@ -9,6 +10,8 @@ export interface ILessonFormValues {
   isPreview: boolean;
   videoId: string;
   content: string;
+  actions?: LessonAction[];
+  prompts?: LessonPrompt[];
 }
 
 export interface ILessonFormProps {

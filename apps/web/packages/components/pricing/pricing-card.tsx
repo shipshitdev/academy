@@ -20,7 +20,9 @@ import { useEffect, useState } from "react";
 // SHARED DATA
 // ============================================================================
 
-export const PRICING_AMOUNT = 49;
+export const MONTHLY_PRICE = 10;
+export const BUNDLE_PRICE = 49;
+export const PRICING_AMOUNT = MONTHLY_PRICE;
 
 export const PRICING_FEATURES = [
   { icon: BookOpen, text: "All courses & lessons" },
@@ -58,6 +60,12 @@ interface PricingCardProps {
    */
   featureStyle?: "icons" | "checklist";
   /**
+   * Pricing option to display
+   * "monthly" - $10/month subscription
+   * "bundle" - $49 one-time payment for full bundle
+   */
+  pricingOption?: "monthly" | "bundle";
+  /**
    * Optional className for the container
    */
   className?: string;
@@ -70,6 +78,7 @@ interface PricingCardProps {
 export function PricingCard({
   variant = "preview",
   featureStyle = "icons",
+  pricingOption = "monthly",
   className = "",
 }: PricingCardProps) {
   const { isSignedIn } = useAuth();
@@ -78,6 +87,10 @@ export function PricingCard({
   const [hasActiveSubscription, setHasActiveSubscription] = useState(false);
   const [subscriptionEnd, setSubscriptionEnd] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const isMonthly = pricingOption === "monthly";
+  const price = isMonthly ? MONTHLY_PRICE : BUNDLE_PRICE;
+  const priceLabel = isMonthly ? "/month" : " one-time";
 
   // Only check subscription status for interactive variant
   useEffect(() => {
@@ -149,7 +162,13 @@ export function PricingCard({
       {/* Badge */}
       <div className="absolute right-6 top-6">
         <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary ring-1 ring-primary/20">
-          {variant === "interactive" ? "Most Popular" : "Full Access"}
+          {variant === "interactive"
+            ? isMonthly
+              ? "Monthly"
+              : "Best Value"
+            : isMonthly
+              ? "Monthly"
+              : "Bundle"}
         </span>
       </div>
 
@@ -157,9 +176,13 @@ export function PricingCard({
         {/* Title - only show on interactive variant */}
         {variant === "interactive" && (
           <>
-            <h3 className="text-2xl font-bold text-foreground">Full Access Membership</h3>
+            <h3 className="text-2xl font-bold text-foreground">
+              {isMonthly ? "Monthly Membership" : "Full Bundle"}
+            </h3>
             <p className="mt-2 text-muted-foreground">
-              Everything you need to build, sell, and scale with AI.
+              {isMonthly
+                ? "Everything you need to build, sell, and scale with AI."
+                : "Lifetime access to the complete ShipShit.dev bundle."}
             </p>
           </>
         )}
@@ -168,16 +191,16 @@ export function PricingCard({
         <div
           className={`flex items-baseline gap-2 ${variant === "interactive" ? "mt-6" : "justify-center"}`}
         >
-          <span className="text-5xl font-bold tracking-tight text-foreground">
-            ${PRICING_AMOUNT}
-          </span>
-          <span className="text-muted-foreground">/month</span>
+          <span className="text-5xl font-bold tracking-tight text-foreground">${price}</span>
+          <span className="text-muted-foreground">{priceLabel}</span>
         </div>
 
         {/* Subtitle for preview */}
         {variant === "preview" && (
           <p className="mt-2 text-center text-sm text-muted-foreground">
-            Less than $2/day to change your life
+            {isMonthly
+              ? "Flexible monthly subscription"
+              : "One-time payment, lifetime access"}
           </p>
         )}
 

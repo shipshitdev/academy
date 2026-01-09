@@ -1,6 +1,6 @@
-# Open Learning Center - Agent Documentation Hub
+# Academy - Agent Documentation Hub
 
-**Welcome to the Open Learning Center workspace!**
+**Welcome to the ShipShit.dev Academy workspace!**
 
 This is the `.agent/` folder containing AI agent documentation, session tracking, and project rules.
 

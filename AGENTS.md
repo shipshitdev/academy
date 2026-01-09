@@ -1,6 +1,6 @@
-# Open Learning Center
+# Academy
 
-This file provides entry points for AI agents.
+ShipShit.dev Academy - This file provides entry points for AI agents.
 
 ## Documentation
 

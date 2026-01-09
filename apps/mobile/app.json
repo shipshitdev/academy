@@ -1,19 +1,19 @@
 {
   "expo": {
-    "name": "Open Learning Center",
-    "slug": "open-learning-center",
+    "name": "Academy",
+    "slug": "academy",
     "version": "1.0.0",
-    "scheme": "open-learning-center",
+    "scheme": "academy",
     "platforms": [
       "ios",
       "android"
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.openlearningcenter.app"
+      "bundleIdentifier": "com.shipshitdev.academy"
     },
     "android": {
-      "package": "com.openlearningcenter.app"
+      "package": "com.shipshitdev.academy"
     },
     "experiments": {
       "typedRoutes": true
